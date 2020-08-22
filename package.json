@@ -1,0 +1,27 @@
+{
+  "name": "express-bootstrap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://saradosdobrasil:tlk-7289@github.com/saradosdobrasil/express-bootstrap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saradosdobrasil/express-bootstrap/issues"
+  },
+  "homepage": "https://github.com/saradosdobrasil/express-bootstrap#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "helmet": "^4.1.0",
+    "path": "^0.12.7"
+  }
+}

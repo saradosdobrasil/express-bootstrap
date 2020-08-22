@@ -1,0 +1,7 @@
+/* Bootstrap 4 */
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+
+/* esconder elemento do Vue.js antes de ser montado */
+[v-cloak] {
+    display: none;
+}
