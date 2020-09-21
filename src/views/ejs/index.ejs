@@ -2,9 +2,16 @@
 
 <div class="row">
     <div class="col">
-        <h1>
+        <h1 class="py-3">
             {{ message | capitalize }}
         </h1>
+
+        <ul class="list-group" v-for="post in posts">
+            <li class="list-group-item">
+                {{post.title}}
+            </li>
+        </ul>
+
     </div>
 </div>
 

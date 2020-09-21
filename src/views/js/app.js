@@ -3,7 +3,10 @@ let vue = new Vue({
     el: '#app',
 
     data: {
-        message: ''
+        api: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api`,
+        message: '',
+        error: 'Erro 404',
+        posts: []
     },
 
     filters: {
@@ -17,8 +20,8 @@ let vue = new Vue({
     methods: {
         async getData() {
             try {
-                let response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
-                this.data = response.data;
+                let response = await axios.get(`${this.api}/posts`);
+                this.posts = response.data;
                 console.log("✔️ Dados:", response.data);
             } catch (err) {
                 console.log("⚠️ Atenção...");
@@ -26,7 +29,7 @@ let vue = new Vue({
                 console.log(err);
             }
         },
-        
+
         hello() {
             this.message = 'hello, world!';
         },

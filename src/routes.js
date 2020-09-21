@@ -8,4 +8,5 @@ let controllers = require('./controllers/controllers');
 
 router.get('/', controllers.get.index);
 
+
 module.exports = router;
