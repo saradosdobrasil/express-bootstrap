@@ -1,11 +1,19 @@
 /* Bootstrap 4 */
 @import url('https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css');
 
-/* esconder elemento do Vue.js antes de ser montado */
 [v-cloak] {
+    /* esconder elemento do Vue.js antes de ser montado */
     display: none;
 }
 
 html, body {
     height: 100%;
+}
+
+.intro {
+    background: url("/images/bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
 }
