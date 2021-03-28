@@ -1,0 +1,22 @@
+# Antes de usar, certifique-se de ter instalada a extensão "REST Client" no Visual Studio Code
+# Assista ao tutorial: https://www.youtube.com/watch?v=Ixjhgh9WT30
+
+GET http://localhost:3000/protected
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozfSwiaWF0IjoxNjE2OTQzNDk1fQ.CVBugk_ZTHJcnQDamHQVfUZqTke6ftp5AMuCWZN9roY
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "id": "1"
+}
+
+
+###
+DELETE http://localhost:3000/deletetermindictionary
+Content-Type: application/json
+
+{
+    "name": "Term1"
+}
