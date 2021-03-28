@@ -1,7 +1,11 @@
 /* Bootstrap 4 */
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css');
 
 /* esconder elemento do Vue.js antes de ser montado */
 [v-cloak] {
     display: none;
+}
+
+html, body {
+    height: 100%;
 }

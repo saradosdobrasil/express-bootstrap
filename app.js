@@ -6,18 +6,24 @@ const ejs = require('ejs');
 const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
+const dotenv = require('dotenv').config();
 const router = require('./src/routes');
 const views = path.join(__dirname, 'src/views');
+const SECRET = process.env.SECRET; // chave secreta do arquivo .env
 const PORT = process.env.PORT || 3000;
 
 // JSON Server
 const jsonServer = require('json-server');
-const db = require('./db/db.json');
-const jsonServerRouter = jsonServer.router(db);
+const db = require('./db/db.js');
+const routerUsers = jsonServer.router(db.users);
+const routerPosts = jsonServer.router(db.posts);
 const jsonServerMiddlewares = jsonServer.defaults({ noCors: true });
 
 
 // * ----- CONFIGURAÇÕES ----- *
+
+// chave secreta usada para gerar tokens com JSON Web Tokens
+app.set('superSecret', SECRET);
 
 // configurar template engine ejs
 app.set('view engine', ejs);
@@ -37,8 +43,11 @@ app.use(express.static(views));
 // usar middleware router do Express
 app.use(router);
 
-// [1] montar rotas do Json Server no endpoint /api
-app.use('/api', jsonServerRouter);
+// [1] montar rotas de posts do Json Server no endpoint /api
+app.use('/api', routerPosts);
+
+// montar rotas de usuários do Json Server no endpoint /admin
+app.use('/admin', routerUsers);
 
 // usar parser para json e corpos de requisição
 app.use(express.json());
@@ -67,4 +76,8 @@ app.listen(PORT, function () {
 
     [1] Mounting JSON Server on another endpoint example
         https://github.com/typicode/json-server#mounting-json-server-on-another-endpoint-example
+
+    [2] JSON Server / how to work with many json files together?
+    https://github.com/typicode/json-server/issues/367#issuecomment-281523344
+
 */

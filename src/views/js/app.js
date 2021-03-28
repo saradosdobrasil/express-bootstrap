@@ -1,12 +1,14 @@
 let vue = new Vue({
-
     el: '#app',
 
     data: {
         api: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api`,
         message: '',
         error: 'Erro 404',
-        posts: []
+        posts: [],
+        texts: {
+            title: "My App"
+        }
     },
 
     filters: {
@@ -30,14 +32,10 @@ let vue = new Vue({
             }
         },
 
-        hello() {
-            this.message = 'hello, world!';
-        },
     },
 
     mounted() {
         this.getData();
-        this.hello();
     }
 
 });

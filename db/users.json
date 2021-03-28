@@ -1,0 +1,11 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "José A.",
+            "password": "xxxxxx",
+            "e-mail": "josea@mail.com",
+            "role": "user"
+        }
+    ]
+}

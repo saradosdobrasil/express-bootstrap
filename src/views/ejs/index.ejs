@@ -1,18 +1,32 @@
 <%- include("./partials/top") -%>
 
-<div class="row">
-    <div class="col">
-        <h1 class="py-3">
-            {{ message | capitalize }}
-        </h1>
+    <div class="row align-items-center h-100">
+        <div class="col">
+            <h1 class="text-center">
+                {{ texts.title }}
+            </h1>
 
-        <ul class="list-group" v-for="post in posts">
-            <li class="list-group-item">
-                {{post.title}}
-            </li>
-        </ul>
+        </div>
+        <div class="col m-5 p-5 bg-light rounded border">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">E-mail</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
 
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Senha</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+
+                <button type="submit" class="btn btn-success">Entrar</button>
+            </form>
+            <div class="alert alert-info text-center mt-5" role="alert">
+                Ainda não tem uma conta? <a href="/register" class="alert-link">Cadastre-se</a> já.
+            </div>
+        </div>
     </div>
-</div>
 
-<%- include("./partials/bottom") -%>
+
+
+    <%- include("./partials/bottom") -%>

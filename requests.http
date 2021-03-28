@@ -2,7 +2,7 @@
 # Assista ao tutorial: https://www.youtube.com/watch?v=Ixjhgh9WT30
 
 GET http://localhost:3000/protected
-Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozfSwiaWF0IjoxNjE2OTQzNDk1fQ.CVBugk_ZTHJcnQDamHQVfUZqTke6ftp5AMuCWZN9roY
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozfSwiaWF0IjoxNjE2OTQ1MTgyfQ.EFgHrjHYkvZgGnmIeUm-_-1KX8wGLzKUlA78x0P5GAo
 
 ###
 POST http://localhost:3000/login

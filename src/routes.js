@@ -2,15 +2,15 @@
 
 let express = require('express');
 let router = express.Router();
-let controller = require('./controllers/controllers');
-let middleware = require('./controllers/middlewares');
+let controllers = require('./controllers/controllers');
+let middlewares = require('./controllers/middlewares');
 
 // GET
 
-router.get('/', controller.get.index);
-router.get('/protected', middleware.checkToken, controller.get.protected);
+router.get('/', controllers.get.index);
+router.get('/protected', middlewares.checkToken, controllers.get.protected);
 
 // POST
-router.post('/login', controller.post.login);
+router.post('/login', controllers.post.login);
 
 module.exports = router;
