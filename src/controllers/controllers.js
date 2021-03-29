@@ -1,5 +1,6 @@
 'use strict';
 
+const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const database = require('./database');
@@ -42,26 +43,43 @@ const post = {
         res.json({ token });
     },
 
-    signup: (req, res, next) => {
+    signup: async (req, res, next) => {
 
-        const user = {};
-        user.name = req.body.name;
-        user.email = req.body.email;
-        user.password = req.body.password;
+        try {
 
-        console.log(user);
-        
-        // salvar usuário no banco
-        database.saveUser(user);
+            const user = {};
+            user.name = req.body.name;
+            user.email = req.body.email;
+            user.password = req.body.password;
 
-        // gerar token
-        const token = jwt.sign({ user }, req.app.get('superSecret'));
+            console.log(user);
 
-        
-        // armazenar token
-        req.token = token;
+            let users = await database.getUsers();
+            let lastId = users[0].id;
+            let newId = lastId + 1;
 
-        res.render('ejs/index.ejs');
+            let newUser = new User(newId, user.name, user.password, user.email);
+            console.log(newUser);
+            let saveNewUser = await database.saveUser(newUser);
+            console.log("aaa", saveNewUser);
+
+
+            // salvar usuário no banco
+            // database.saveUser(user);
+
+            // gerar token
+            const token = jwt.sign({ user }, req.app.get('superSecret'));
+
+
+            // armazenar token
+            req.token = token;
+
+            res.render('ejs/index.ejs');
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
     },
 }
 

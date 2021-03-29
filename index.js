@@ -73,8 +73,8 @@ app.use((req, res, next) => {
 // * ----- START ----- *
 
 // inicializar servidor
-app.listen(`${settings.port}`, function () {
-    console.log(`Servidor executando em: ${settings.host}${settings.port}`);
+app.listen(`${settings.location.port}`, function () {
+    console.log(`Servidor executando em: ${settings.location.host}${settings.location.port}`);
 });
 
 /*

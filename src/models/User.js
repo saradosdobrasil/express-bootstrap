@@ -7,7 +7,7 @@ class User {
         this.name = name;
         this.password = password;
         this.email = email;
-        this.role = defineRole();
+        this.role = this.defineRole();
     }
 
     // define quem é administrador e quem é usuário pelo e-mail
