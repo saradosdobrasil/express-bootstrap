@@ -3,7 +3,6 @@ let vue = new Vue({
 
     data: {
         api: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api`,
-        message: '',
         forms: {
             login: {
                 email: '',
@@ -40,11 +39,6 @@ let vue = new Vue({
         onSubmit(event) {
             // console.log("event.preventDefault() acionado:", event);
         },
-
-        createAccount() {
-
-        },
-
 
         async getData() {
             try {

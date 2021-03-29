@@ -12,9 +12,11 @@ const get = {
         res.render('ejs/index.ejs');
     },
 
-    protected: (req, res, next) => {
+    home: (req, res, next) => {
 
-        jwt.verify(req.token, req.app.get('superSecret'), (err, data) => {
+        let token = req.query.token;
+
+        jwt.verify(token, req.app.get('superSecret'), (err, data) => {
 
             if (err) {
                 // enviar mensagem de acesso proibido
@@ -25,7 +27,6 @@ const get = {
             }
         });
 
-        res.json({ text: 'protected' });
     },
 
     signup: (req, res, next) => {
@@ -37,10 +38,41 @@ const get = {
 // POST
 const post = {
 
-    login: (req, res, next) => {
-        const user = { id: 3 };
-        const token = jwt.sign({ user }, req.app.get('superSecret'));
-        res.json({ token });
+    login: async (req, res, next) => {
+
+        try {
+
+            let email = req.body.email;
+            let password = req.body.password;
+
+            // verificar se usuário existe no banco a partir dos dados informados
+            let searchUser = await database.searchUser(email, password);
+
+            // se usuário não existe
+            if (searchUser.length === 0) {
+
+                // exibir página usuário não cadastrado
+                res.render('ejs/login_fail.ejs')
+            }
+
+            // se usuário existe
+            if (searchUser.length === 1) {
+
+                // gerar token
+                const token = jwt.sign({ email: email }, req.app.get('superSecret'));
+
+                // armazenar token
+                req.token = token;
+
+                // redirecionar à pagina inicial
+                res.redirect('/home?token=' + token);
+
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
     },
 
     signup: async (req, res, next) => {
@@ -63,12 +95,6 @@ const post = {
             // salvar novo usuário no banco
             await database.saveUser(newUser);
 
-            // gerar token
-            const token = jwt.sign({ id: newId, name: name, email: email }, req.app.get('superSecret'));
-
-            // armazenar token
-            req.token = token;
-
             // direcionar a página de login
             res.render('ejs/index.ejs');
 
@@ -78,7 +104,6 @@ const post = {
 
     },
 }
-
 
 module.exports = {
     get, post

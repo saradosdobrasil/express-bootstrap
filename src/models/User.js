@@ -12,7 +12,7 @@ class User {
 
     // define quem é administrador e quem é usuário pelo e-mail
     defineRole() {
-        if (this.email === 'myUsername@mail.com') {
+        if (this.email === 'admin@mail.com') {
             return 'admin';
         } else {
             return 'user';

@@ -9,7 +9,8 @@ let middlewares = require('./controllers/middlewares');
 
 router.get('/', controllers.get.index);
 router.get('/signup', controllers.get.signup);
-router.get('/protected', middlewares.checkToken, controllers.get.protected);
+router.get('/home', controllers.get.home);
+// router.get('/home', middlewares.checkToken, controllers.get.home);
 
 // POST
 router.post('/login', controllers.post.login);
