@@ -4,10 +4,25 @@ let vue = new Vue({
     data: {
         api: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api`,
         message: '',
-        error: 'Erro 404',
+        forms: {
+            login: {
+                email: '',
+                password: ''
+            }
+        },
         posts: [],
         texts: {
-            title: "My App"
+            createAccount: 'Criar conta',
+            phone: 'Celular',
+            email: 'E-mail',
+            enter: 'Entrar',
+            error: 'Erro 404',
+            login: 'Login',
+            name: 'Nome',
+            password: 'Senha',
+            register: 'Cadastrar',
+            signup: 'Crie uma conta gratuita',
+            title: 'Express Bootstrap',
         }
     },
 
@@ -20,6 +35,17 @@ let vue = new Vue({
     },
 
     methods: {
+
+        // evento de submissão de formulários
+        onSubmit(event) {
+            // console.log("event.preventDefault() acionado:", event);
+        },
+
+        createAccount() {
+
+        },
+
+
         async getData() {
             try {
                 let response = await axios.get(`${this.api}/posts`);

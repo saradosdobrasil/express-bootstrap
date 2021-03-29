@@ -8,9 +8,9 @@ const cors = require('cors');
 const compression = require('compression');
 const dotenv = require('dotenv').config();
 const router = require('./src/routes');
+const settings = require('./settings');
+const secret = settings.secret;
 const views = path.join(__dirname, 'src/views');
-const SECRET = process.env.SECRET; // chave secreta do arquivo .env
-const PORT = process.env.PORT || 3000;
 
 // JSON Server
 const jsonServer = require('json-server');
@@ -23,7 +23,7 @@ const jsonServerMiddlewares = jsonServer.defaults({ noCors: true });
 // * ----- CONFIGURAÇÕES ----- *
 
 // chave secreta usada para gerar tokens com JSON Web Tokens
-app.set('superSecret', SECRET);
+app.set('superSecret', secret);
 
 // configurar template engine ejs
 app.set('view engine', ejs);
@@ -39,6 +39,12 @@ app.set('json spaces', 2);
 
 // definir diretório 'views' para entrega de arquivos estáticos do Express
 app.use(express.static(views));
+
+// [3] permitir usar dados enviados por formulários e codificá-los em JSON
+app.use(express.json());
+
+// [3] permitir usar dados enviados por urls e codificá-los em JSON
+app.use(express.urlencoded({ extended: true })); 
 
 // usar middleware router do Express
 app.use(router);
@@ -67,8 +73,8 @@ app.use((req, res, next) => {
 // * ----- START ----- *
 
 // inicializar servidor
-app.listen(PORT, function () {
-    console.log(`Server running at: http://localhost:${PORT}`);
+app.listen(`${settings.port}`, function () {
+    console.log(`Servidor executando em: ${settings.host}${settings.port}`);
 });
 
 /*
@@ -78,6 +84,9 @@ app.listen(PORT, function () {
         https://github.com/typicode/json-server#mounting-json-server-on-another-endpoint-example
 
     [2] JSON Server / how to work with many json files together?
-    https://github.com/typicode/json-server/issues/367#issuecomment-281523344
+        https://github.com/typicode/json-server/issues/367#issuecomment-281523344
+
+    [3] How to access POST form fields
+        https://stackoverflow.com/questions/5710358/how-to-access-post-form-fields
 
 */

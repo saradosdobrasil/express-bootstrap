@@ -2,6 +2,7 @@
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const database = require('./database');
 
 // GET
 const get = {
@@ -25,6 +26,11 @@ const get = {
 
         res.json({ text: 'protected' });
     },
+
+    signup: (req, res, next) => {
+        res.render('ejs/signup.ejs');
+    }
+
 }
 
 // POST
@@ -35,7 +41,30 @@ const post = {
         const token = jwt.sign({ user }, req.app.get('superSecret'));
         res.json({ token });
     },
+
+    signup: (req, res, next) => {
+
+        const user = {};
+        user.name = req.body.name;
+        user.email = req.body.email;
+        user.password = req.body.password;
+
+        console.log(user);
+        
+        // salvar usuário no banco
+        database.saveUser(user);
+
+        // gerar token
+        const token = jwt.sign({ user }, req.app.get('superSecret'));
+
+        
+        // armazenar token
+        req.token = token;
+
+        res.render('ejs/index.ejs');
+    },
 }
+
 
 module.exports = {
     get, post
