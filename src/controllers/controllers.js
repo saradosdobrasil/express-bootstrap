@@ -47,33 +47,29 @@ const post = {
 
         try {
 
-            const user = {};
-            user.name = req.body.name;
-            user.email = req.body.email;
-            user.password = req.body.password;
+            // dados do formulário
+            let name = req.body.name;
+            let email = req.body.email;
+            let password = req.body.password;
 
-            console.log(user);
-
+            // obter dados do último usuário cadastrado (por id)
             let users = await database.getUsers();
             let lastId = users[0].id;
             let newId = lastId + 1;
 
-            let newUser = new User(newId, user.name, user.password, user.email);
-            console.log(newUser);
-            let saveNewUser = await database.saveUser(newUser);
-            console.log("aaa", saveNewUser);
+            // criar novo usuário
+            let newUser = new User(newId, name, password, email);
 
-
-            // salvar usuário no banco
-            // database.saveUser(user);
+            // salvar novo usuário no banco
+            await database.saveUser(newUser);
 
             // gerar token
-            const token = jwt.sign({ user }, req.app.get('superSecret'));
-
+            const token = jwt.sign({ id: newId, name: name, email: email }, req.app.get('superSecret'));
 
             // armazenar token
             req.token = token;
 
+            // direcionar a página de login
             res.render('ejs/index.ejs');
 
         } catch (error) {

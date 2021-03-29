@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "password": "12345",
+      "email": "myUsername@mail.com",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "Cezar Souza",
+      "password": "124567",
+      "email": "cezarsouza@mail.com",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "name": "Daniela Santos",
+      "password": "3gggfgfgf",
+      "email": "danisantos@mail.com",
+      "role": "user"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Teste 1",
+      "author": "Author"
+    }
+  ]
+}

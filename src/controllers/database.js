@@ -2,9 +2,8 @@
 
 const axios = require('axios');
 const settings = require('../../settings');
-const location_href = `${settings.location.host}3000`;
+const location_href = `${settings.location.host}3000/api`;
 const headers = {
-    'Accept': 'application/json',
     'Content-Type': 'application/json'
 }
 
@@ -14,7 +13,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/admin/users?_sort=id&_order=desc`);
+            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&_limit=1`);
             return response.data;
 
         } catch (error) {
@@ -28,12 +27,7 @@ module.exports = {
         try {
 
             let params = obj;
-            let response = await axios.post(`${location_href}/admin/users`, params, {
-                headers: headers
-            });
-            
-            return response.data;
-
+            return await axios.post(`${location_href}/users`, params, { headers: headers });
 
         } catch (error) {
             console.log(error.message);

@@ -14,9 +14,8 @@ const views = path.join(__dirname, 'src/views');
 
 // JSON Server
 const jsonServer = require('json-server');
-const db = require('./db/db.js');
-const routerUsers = jsonServer.router(db.users);
-const routerPosts = jsonServer.router(db.posts);
+const db = path.join(__dirname, '/db/db.json');
+const routerDataBase = jsonServer.router(db);
 const jsonServerMiddlewares = jsonServer.defaults({ noCors: true });
 
 
@@ -50,10 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
 // [1] montar rotas de posts do Json Server no endpoint /api
-app.use('/api', routerPosts);
-
-// montar rotas de usuários do Json Server no endpoint /admin
-app.use('/admin', routerUsers);
+app.use('/api', routerDataBase);
 
 // usar parser para json e corpos de requisição
 app.use(express.json());
