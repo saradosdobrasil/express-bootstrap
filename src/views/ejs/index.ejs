@@ -1,6 +1,6 @@
 <%- include("./partials/top") -%>
 
-    <div class="row align-items-center h-100 intro">
+    <div class="row align-items-center h-100 login">
         <div class="col-6">
 
             <h1 class="text-center">
@@ -27,10 +27,19 @@
                         <button type="submit" class="btn btn-success">{{ texts.enter }}</button>
                     </form>
 
+                    <%if (alert === 'login' ) { %>
                     <div class="alert alert-info text-center mt-5 p-3" role="alert">
-                        Novo por aqui? <br>
+                        Novo por aqui?
                         <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
                     </div>
+                    <% } %>
+
+                    <%if (alert==='user not found' ) { %>
+                        <div class="alert alert-danger text-center mt-5 p-3" role="alert">
+                            Usuário não encontrado!
+                            <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
+                        </div>
+                    <% } %>
 
                 </div>
             </div>

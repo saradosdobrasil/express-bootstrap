@@ -9,12 +9,8 @@ const compression = require('compression');
 const dotenv = require('dotenv').config();
 const router = require('./src/routes');
 const settings = require('./settings');
-const secret = settings.secret;
+const localhost = `${settings.location.host}${settings.location.port}`;
 const views = path.join(__dirname, 'src/views');
-
-// Socket.IO
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
 
 // JSON Server
 const jsonServer = require('json-server');
@@ -26,7 +22,7 @@ const jsonServerMiddlewares = jsonServer.defaults({ noCors: true });
 // * ----- CONFIGURAÇÕES ----- *
 
 // chave secreta usada para gerar tokens com JSON Web Tokens
-app.set('superSecret', secret);
+app.set('superSecret', settings.secret);
 
 // configurar template engine ejs
 app.set('view engine', ejs);
@@ -46,14 +42,7 @@ app.use(express.static(views));
 // [3] permitir usar dados enviados por formulários e urls e codificá-los em JSON
 // colocar sempre antes de app.use(router)
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
-
-// Usar Socket.IO nas rotas do Express
-// colocar sempre antes de app.use(router)
-app.use(function (req, res, next) {
-    req.io = io;
-    next();
-});
+app.use(express.urlencoded({ extended: true }));
 
 // usar middleware router do Express
 app.use(router);
@@ -77,7 +66,7 @@ app.use((req, res, next) => {
 
 // inicializar servidor
 app.listen(`${settings.location.port}`, function () {
-    console.log(`Servidor executando em: ${settings.location.host}${settings.location.port}`);
+    console.log(`Servidor executando em: ${localhost}`);
 });
 
 /*
@@ -91,5 +80,9 @@ app.listen(`${settings.location.port}`, function () {
 
     [3] How to access POST form fields
         https://stackoverflow.com/questions/5710358/how-to-access-post-form-fields
+
+    [4] Express JS: No 'Access-Control-Allow-Origin' header is present on the requested resource
+        https://stackoverflow.com/questions/40025450/express-js-no-access-control-allow-origin-header-is-present-on-the-requested/40026625
+
 
 */

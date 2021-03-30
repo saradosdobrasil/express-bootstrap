@@ -10,8 +10,15 @@ html, body {
     height: 100%;
 }
 
-.intro {
-    background: url("/images/bg.jpg");
+.login {
+    background: url("/images/login.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.signup {
+    background: url("/images/signup.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

@@ -11,12 +11,12 @@ const get = {
     index: (req, res, next) => {
 
         // obter objeto Socket.IO configurado no arquivo 'server.js'
-        let io = req.io;
+        //let io = req.io;
 
         // enviar dados para o Socket.IO
-        io.emit('test', 'Olá');
+        //io.emit('test', 'Olá');
 
-        res.render('ejs/index.ejs');
+        res.render('ejs/index.ejs', { alert: 'login' });
     },
 
     home: (req, res, next) => {
@@ -26,8 +26,9 @@ const get = {
         jwt.verify(token, req.app.get('superSecret'), (err, data) => {
 
             if (err) {
-                // enviar mensagem de acesso proibido
-                res.sendStatus(403);
+
+                // enviar à pagina de login
+                res.render('ejs/index.ejs');
 
             } else {
                 res.json({ text: 'Bem vindo!', data })
@@ -59,21 +60,17 @@ const post = {
             if (searchUser.length === 0) {
 
                 // exibir página usuário não cadastrado
-                res.render('ejs/login_fail.ejs')
+                res.render('ejs/index.ejs', { alert: 'user not found' });
             }
 
             // se usuário existe
             if (searchUser.length === 1) {
 
-                // gerar token
+                // gerar token JWT
                 const token = jwt.sign({ email: email }, req.app.get('superSecret'));
-
-                // armazenar token
-                req.token = token;
 
                 // redirecionar à pagina inicial
                 res.redirect('/home?token=' + token);
-
             }
 
         } catch (error) {

@@ -1,11 +1,8 @@
-// objeto do Socket.IO
-const socket = io();
-
 let vue = new Vue({
     el: '#app',
 
     data: {
-        api: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api`,
+        api: `${window.location.href}api`,
         forms: {
             login: {
                 email: '',
@@ -19,7 +16,7 @@ let vue = new Vue({
             email: 'E-mail',
             enter: 'Entrar',
             error: 'Erro 404',
-            login: 'Login',
+            login: 'Entrar',
             name: 'Nome',
             password: 'Senha',
             register: 'Cadastrar',
@@ -57,20 +54,7 @@ let vue = new Vue({
 
     },
 
-    created() {
-
-    },
-    
     mounted() {
-
-        socket.on("connect", () => {
-            console.log("✔️ Socket.IO conectado!");
-        });
-
-        socket.on("test", (data) => {
-            console.log("✔️ data:", data);
-        });
-        
         this.getData();
     }
 
