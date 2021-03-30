@@ -1,3 +1,6 @@
+// objeto do Socket.IO
+const socket = io();
+
 let vue = new Vue({
     el: '#app',
 
@@ -54,7 +57,20 @@ let vue = new Vue({
 
     },
 
+    created() {
+
+    },
+    
     mounted() {
+
+        socket.on("connect", () => {
+            console.log("✔️ Socket.IO conectado!");
+        });
+
+        socket.on("test", (data) => {
+            console.log("✔️ data:", data);
+        });
+        
         this.getData();
     }
 

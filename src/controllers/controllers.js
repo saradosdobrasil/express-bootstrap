@@ -9,6 +9,13 @@ const database = require('./database');
 const get = {
 
     index: (req, res, next) => {
+
+        // obter objeto Socket.IO configurado no arquivo 'server.js'
+        let io = req.io;
+
+        // enviar dados para o Socket.IO
+        io.emit('test', 'Olá');
+
         res.render('ejs/index.ejs');
     },
 

@@ -12,6 +12,10 @@ const settings = require('./settings');
 const secret = settings.secret;
 const views = path.join(__dirname, 'src/views');
 
+// Socket.IO
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+
 // JSON Server
 const jsonServer = require('json-server');
 const db = path.join(__dirname, '/db/db.json');
@@ -39,21 +43,23 @@ app.set('json spaces', 2);
 // definir diretório 'views' para entrega de arquivos estáticos do Express
 app.use(express.static(views));
 
-// [3] permitir usar dados enviados por formulários e codificá-los em JSON
+// [3] permitir usar dados enviados por formulários e urls e codificá-los em JSON
+// colocar sempre antes de app.use(router)
 app.use(express.json());
-
-// [3] permitir usar dados enviados por urls e codificá-los em JSON
 app.use(express.urlencoded({ extended: true })); 
+
+// Usar Socket.IO nas rotas do Express
+// colocar sempre antes de app.use(router)
+app.use(function (req, res, next) {
+    req.io = io;
+    next();
+});
 
 // usar middleware router do Express
 app.use(router);
 
 // [1] montar rotas de posts do Json Server no endpoint /api
 app.use('/api', routerDataBase);
-
-// usar parser para json e corpos de requisição
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 // ativar CORS
 app.use(cors());
@@ -65,6 +71,7 @@ app.use(compression());
 app.use((req, res, next) => {
     res.render('ejs/error.ejs');
 });
+
 
 // * ----- START ----- *
 
