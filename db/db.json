@@ -20,6 +20,13 @@
       "password": "1234",
       "email": "danisantos@mail.com",
       "role": "user"
+    },
+    {
+      "id": 4,
+      "name": "Alberto Simões",
+      "password": "1234",
+      "email": "albersim@mail.com",
+      "role": "user"
     }
   ],
   "posts": [

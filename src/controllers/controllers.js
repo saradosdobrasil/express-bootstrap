@@ -22,16 +22,16 @@ const get = {
             // se token for inválido
             if (err) {
 
-                // enviar à pagina de login
-                res.render('ejs/index.ejs');
+                // redirecionar à pagina de login
+                res.redirect('/');
 
             }
             // se token for válido
             else {
 
-
+                // exibir página de usuário
+                // console.log(data)
                 res.render('ejs/home.ejs', { data });
-                // res.json({ data })
             }
         });
 
@@ -118,8 +118,8 @@ const post = {
                     // salvar novo usuário no banco
                     await database.saveUser(newUser);
 
-                    // direcionar a página de login
-                    res.render('ejs/index.ejs', { alert: 'login' });
+                    // redirecionar à pagina de login
+                    res.redirect('/');
                 }
 
         } catch (error) {
