@@ -4,14 +4,18 @@
         <div class="col-6">
 
             <h1 class="text-center">
-                {{ texts.title }}
+                <a class="text-decoration-none text-dark" href="/">
+                    {{ texts.title }}
+                </a>
             </h1>
 
         </div>
         <div class="col-6 bg-light border border-top-0 border-right-0 border-bottom-0 h-100">
             <div class="row align-items-center h-100 p-5">
                 <div class="col">
-                    <h4 class="py-4">{{ texts.createAccount }}</h4>
+                    <h4 class="py-4">
+                        {{ texts.createAccount }}
+                    </h4>
 
                     <form action='signup' method='POST'>
 
@@ -27,12 +31,18 @@
 
                         <div class="form-group">
                             <label for="password">{{ texts.password }}</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                required>
+                            <input type="password" class="form-control" id="password" name="password" required>
                         </div>
 
                         <button type="submit" class="btn btn-success">{{ texts.register }}</button>
                     </form>
+
+                    <%if (this.alert && alert === 'user already registered' ) { %>
+                        <div class="alert alert-alert text-center mt-5 p-3" role="alert">
+                            Usuário já cadastrado!
+                            <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
+                        </div>
+                    <% } %>
 
                 </div>
             </div>

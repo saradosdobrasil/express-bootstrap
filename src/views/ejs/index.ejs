@@ -4,14 +4,18 @@
         <div class="col-6">
 
             <h1 class="text-center">
-                {{ texts.title }}
+                <a class="text-decoration-none text-dark" href="/">
+                    {{ texts.title }}
+                </a>
             </h1>
 
         </div>
         <div class="col-6 bg-light border border-top-0 border-right-0 border-bottom-0 h-100">
             <div class="row align-items-center h-100 p-5">
                 <div class="col">
-                    <h4 class="py-4">{{ texts.login }}</h4>
+                    <h4 class="py-4">
+                        {{ texts.login }}
+                    </h4>
 
                     <form action='login' method='POST'>
                         <div class="form-group">
@@ -27,14 +31,20 @@
                         <button type="submit" class="btn btn-success">{{ texts.enter }}</button>
                     </form>
 
-                    <%if (alert === 'login' ) { %>
+                    <%if (alert === 'login') { %>
                     <div class="alert alert-info text-center mt-5 p-3" role="alert">
                         Novo por aqui?
                         <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
                     </div>
                     <% } %>
 
-                    <%if (alert==='user not found' ) { %>
+                    <%if (alert === 'user already registered') { %>
+                        <div class="alert alert-warning text-center mt-5 p-3" role="alert">
+                            Usuário já cadastrado! Digite suas credenciais de acesso.
+                        </div>
+                    <% } %>
+
+                    <%if (alert === 'user not found') { %>
                         <div class="alert alert-danger text-center mt-5 p-3" role="alert">
                             Usuário não encontrado!
                             <a href="/signup" class="alert-link">{{ texts.signup }}.</a>

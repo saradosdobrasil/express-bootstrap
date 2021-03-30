@@ -35,6 +35,17 @@ module.exports = {
 
     },
 
+    searchEmail: async (email) => {
+        try {
+
+            let response = await axios.get(`${location_href}/users?email=${email}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     searchUser: async (email, password) => {
         try {
 

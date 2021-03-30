@@ -9,13 +9,6 @@ const database = require('./database');
 const get = {
 
     index: (req, res, next) => {
-
-        // obter objeto Socket.IO configurado no arquivo 'server.js'
-        //let io = req.io;
-
-        // enviar dados para o Socket.IO
-        //io.emit('test', 'Olá');
-
         res.render('ejs/index.ejs', { alert: 'login' });
     },
 
@@ -23,15 +16,22 @@ const get = {
 
         let token = req.query.token;
 
+        // verificar token
         jwt.verify(token, req.app.get('superSecret'), (err, data) => {
 
+            // se token for inválido
             if (err) {
 
                 // enviar à pagina de login
                 res.render('ejs/index.ejs');
 
-            } else {
-                res.json({ text: 'Bem vindo!', data })
+            }
+            // se token for válido
+            else {
+
+
+                res.render('ejs/home.ejs', { data });
+                // res.json({ data })
             }
         });
 
@@ -66,8 +66,14 @@ const post = {
             // se usuário existe
             if (searchUser.length === 1) {
 
+                // obter nome do usuário
+                let name = searchUser[0].name;
+
+                // obter papel do usuário
+                let role = searchUser[0].role;
+
                 // gerar token JWT
-                const token = jwt.sign({ email: email }, req.app.get('superSecret'));
+                const token = jwt.sign({ name, email, role }, req.app.get('superSecret'));
 
                 // redirecionar à pagina inicial
                 res.redirect('/home?token=' + token);
@@ -88,19 +94,33 @@ const post = {
             let email = req.body.email;
             let password = req.body.password;
 
-            // obter dados do último usuário cadastrado (por id)
-            let users = await database.getUsers();
-            let lastId = users[0].id;
-            let newId = lastId + 1;
+            // verificar se existe conta de email cadastrada
+            let searchEmail = await database.searchEmail(email);
 
-            // criar novo usuário
-            let newUser = new User(newId, name, password, email);
+            // se existe conta de email cadastrada
+            if (searchEmail.length > 0) {
 
-            // salvar novo usuário no banco
-            await database.saveUser(newUser);
+                // voltar a pagina inicial e exibir alerta de usuário já registrado
+                req.baseUrl = '/';
+                res.render('ejs/index.ejs', { alert: 'user already registered' });
+            }
+            else
+                if (searchEmail.length === 0) {
 
-            // direcionar a página de login
-            res.render('ejs/index.ejs');
+                    // obter dados do último usuário cadastrado (por id)
+                    let users = await database.getUsers();
+                    let lastId = users[0].id;
+                    let newId = lastId + 1;
+
+                    // criar novo usuário
+                    let newUser = new User(newId, name, password, email);
+
+                    // salvar novo usuário no banco
+                    await database.saveUser(newUser);
+
+                    // direcionar a página de login
+                    res.render('ejs/index.ejs', { alert: 'login' });
+                }
 
         } catch (error) {
             console.log(error.message);

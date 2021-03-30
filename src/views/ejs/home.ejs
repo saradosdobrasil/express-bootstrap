@@ -1,42 +1,16 @@
 <%- include("./partials/top") -%>
+    <%- include("./partials/nav") -%>
 
-    <div class="row align-items-center h-100 login">
-        <div class="col-6">
+        <div class="row m-3 border align-items-center h-100 ">
+            <div class="col">
+                <h4>
+                    Bem-vindo(a), <%- data.name -%>!
+                </h4>
+            </div>
+            <div class="col">
 
-            <h1 class="text-center">
-                {{ texts.title }}
-            </h1>
-
-        </div>
-        <div class="col-6 bg-light border border-top-0 border-right-0 border-bottom-0 h-100">
-            <div class="row align-items-center h-100 p-5">
-                <div class="col">
-                    <h4 class="py-4">{{ texts.createAccount }}</h4>
-
-                    <form action='/signup' method='POST'>
-
-                        <div class="form-group">
-                            <label for="email">{{ texts.name }}</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">{{ texts.email }}</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">{{ texts.password }}</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                required>
-                        </div>
-
-                        <button type="submit" class="btn btn-success">{{ texts.register }}</button>
-                    </form>
-
-                </div>
             </div>
         </div>
-    </div>
 
-    <%- include("./partials/bottom") -%></div>
+        <%- include("./partials/footer") -%>
+            <%- include("./partials/bottom") -%>
