@@ -135,18 +135,17 @@ const post = {
 // DELETE
 const del = {
 
-    user: async (req, res, next) => {
+    deleteuser: async (req, res, next) => {
 
         try {
 
-            let token = req.query.token;
             let id = req.body.id;
 
-            let deleteUser = await database.deleteUser(id);
-            console.log(deleteUser);
+            // deletar usuário pelo id
+            await database.deleteUser(id);
 
-            res.redirect('/home?token=' + token);
-
+            // recarregar a página
+            res.redirect('back');
 
         } catch (error) {
             console.log(error.message);

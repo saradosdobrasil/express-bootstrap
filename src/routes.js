@@ -12,10 +12,8 @@ router.get('/signup', controllers.get.signup);
 router.get('/login', middlewares.authentication, controllers.get.login);
 
 // POST
+router.post('/deleteuser', controllers.del.deleteuser);
 router.post('/login', controllers.post.login);
 router.post('/signup', controllers.post.signup);
-
-// DELETE
-router.delete('/user', controllers.del.user);
 
 module.exports = router;

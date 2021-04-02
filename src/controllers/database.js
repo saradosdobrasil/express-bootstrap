@@ -9,13 +9,12 @@ const headers = {
 
 module.exports = {
 
-    
+
     deleteUser: async (id) => {
 
         try {
 
-            let response = await axios.delete(`${location_href}/users/${id}`);
-            return response.data;
+            await axios.delete(`${location_href}/users/${id}`);
 
         } catch (error) {
             console.log(error.message);
@@ -39,7 +38,7 @@ module.exports = {
     getUsers: async () => {
 
         try {
-            
+
             let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&role=user`);
             return response.data;
 
