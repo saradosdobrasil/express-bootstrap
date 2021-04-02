@@ -1,0 +1,62 @@
+<%- include("./partials/top-home") -%>
+    <%- include("./partials/nav") -%>
+
+        <!-- Main -->
+        <main class="container-fluid h-100">
+            <div class="row py-3">
+                <div class="col">
+
+                    <h4 class="text-center py-2">
+                        Bem-vindo(a), <%- data.name -%>!
+                    </h4>
+
+                    <h6 class="py-2">
+                        <i class="bi bi-server"></i>
+                        Usuários
+                    </h6>
+
+                    <form action='user' method='DELETE'>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr class="align-items-center">
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <% users.map((user)=> { %>
+                                            <td name="<%= user.id %>">
+                                                <%= user.id %>
+                                            </td>
+                                            <td>
+                                                <%= user.name %>
+                                            </td>
+                                            <td>
+                                                <%= user.password %>
+                                            </td>
+                                            <td>
+                                                <%= user.email %>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                            <% }) %>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </main>
+
+        <%- include("./partials/footer") -%>
+            <%- include("./partials/bottom") -%>

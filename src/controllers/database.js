@@ -9,11 +9,38 @@ const headers = {
 
 module.exports = {
 
-    getUsers: async () => {
+    
+    deleteUser: async (id) => {
+
+        try {
+
+            let response = await axios.delete(`${location_href}/users/${id}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+    getLastUser: async () => {
 
         try {
 
             let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&_limit=1`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+    getUsers: async () => {
+
+        try {
+            
+            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&role=user`);
             return response.data;
 
         } catch (error) {

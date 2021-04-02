@@ -1,6 +1,5 @@
 'use strict';
 
-const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const database = require('./database');
@@ -12,28 +11,29 @@ const get = {
         res.render('ejs/index.ejs', { alert: 'login' });
     },
 
-    home: (req, res, next) => {
+    login: async (req, res, next) => {
 
-        let token = req.query.token;
+        try {
 
-        // verificar token
-        jwt.verify(token, req.app.get('superSecret'), (err, data) => {
+            // recuperar dados do usuário autenticado passados no middleware
+            let data = req.data;
 
-            // se token for inválido
-            if (err) {
+            // exibir página do admin
+            if (data.role === 'admin') {
 
-                // redirecionar à pagina de login
-                res.redirect('/');
+                let users = await database.getUsers();
 
+                res.render('ejs/admin.ejs', { data, users });
             }
-            // se token for válido
-            else {
 
-                // exibir página de usuário
-                // console.log(data)
+            // exibir página do usuário
+            if (data.role === 'user') {
                 res.render('ejs/home.ejs', { data });
             }
-        });
+
+        } catch (error) {
+            console.log(error.message);
+        }
 
     },
 
@@ -69,14 +69,17 @@ const post = {
                 // obter nome do usuário
                 let name = searchUser[0].name;
 
+                let id = searchUser[0].id;
+
                 // obter papel do usuário
                 let role = searchUser[0].role;
 
                 // gerar token JWT
                 const token = jwt.sign({ name, email, role }, req.app.get('superSecret'));
 
-                // redirecionar à pagina inicial
-                res.redirect('/home?token=' + token);
+                // redirecionar à rota de autenticação
+                res.redirect(`/login?id=${id}&token=` + token);
+
             }
 
         } catch (error) {
@@ -108,7 +111,7 @@ const post = {
                 if (searchEmail.length === 0) {
 
                     // obter dados do último usuário cadastrado (por id)
-                    let users = await database.getUsers();
+                    let users = await database.getLastUser();
                     let lastId = users[0].id;
                     let newId = lastId + 1;
 
@@ -129,6 +132,28 @@ const post = {
     },
 }
 
+// DELETE
+const del = {
+
+    user: async (req, res, next) => {
+
+        try {
+
+            let token = req.query.token;
+            let id = req.body.id;
+
+            let deleteUser = await database.deleteUser(id);
+            console.log(deleteUser);
+
+            res.redirect('/home?token=' + token);
+
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+}
+
 module.exports = {
-    get, post
+    get, post, del
 }
