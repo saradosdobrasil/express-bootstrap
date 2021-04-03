@@ -16,8 +16,8 @@ const views = path.join(__dirname, 'src/views');
 const jsonServer = require('json-server');
 const db = path.join(__dirname, '/db/db.json');
 const routerDataBase = jsonServer.router(db);
-const jsonServerMiddlewares = jsonServer.defaults({ noCors: true });
-
+const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
+const { authentication } = require('./src/controllers/middlewares');
 
 // * ----- CONFIGURAÇÕES ----- *
 
@@ -47,7 +47,10 @@ app.use(express.urlencoded({ extended: true }));
 // usar middleware router do Express
 app.use(router);
 
-// [1] montar rotas de posts do Json Server no endpoint /api
+// usar middlewares do JSON Server
+app.use(jsonServerMiddlewares);
+
+// [1] montar rotas de posts do JSON Server no endpoint /api
 app.use('/api', routerDataBase);
 
 // ativar CORS
@@ -84,5 +87,7 @@ app.listen(`${settings.location.port}`, function () {
     [4] Express JS: No 'Access-Control-Allow-Origin' header is present on the requested resource
         https://stackoverflow.com/questions/40025450/express-js-no-access-control-allow-origin-header-is-present-on-the-requested/40026625
 
+    [5] JSON Server API
+        https://www.npmjs.com/package/json-server#api
 
 */

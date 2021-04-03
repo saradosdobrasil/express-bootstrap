@@ -28,6 +28,22 @@ module.exports = {
                 next();
             }
         });
-    }
+    },
 
+    authorization: (req, res, next) => {
+
+        // se houver parâmetro query na url
+        if (req.query.apikey !== undefined) {
+
+            // se valor do parâmetro for igual a chave da API
+            if (req.query.apikey === process.env.APIKEY) {
+                console.log('Acesso autorizado a API');
+                next();
+            }
+
+        } else {
+            // voltar à pagina de login
+            res.redirect('/');
+        }
+    }
 }

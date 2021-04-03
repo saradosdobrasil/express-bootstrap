@@ -8,6 +8,7 @@ let middlewares = require('./controllers/middlewares');
 // GET
 
 router.get('/', controllers.get.index);
+router.get('/api*', middlewares.authorization); // aplicar middleware de autorizacao a api com senha
 router.get('/signup', controllers.get.signup);
 router.get('/login', middlewares.authentication, controllers.get.login);
 
