@@ -3,18 +3,16 @@
 const axios = require('axios');
 const settings = require('../../settings');
 const location_href = `${settings.location.host}3000/api`;
-const headers = {
-    'Content-Type': 'application/json'
-}
+const headers = { 'Content-Type': 'application/json' };
+const apikey = `apikey=${process.env.APIKEY}`;
 
 module.exports = {
-
 
     deleteUser: async (id) => {
 
         try {
 
-            await axios.delete(`${location_href}/users/${id}`);
+            await axios.delete(`${location_href}/users/${id}?${apikey}`);
 
         } catch (error) {
             console.log(error.message);
@@ -26,7 +24,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&_limit=1`);
+            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&_limit=1&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -39,7 +37,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/posts?_sort=id&_order=desc`);
+            let response = await axios.get(`${location_href}/posts?_sort=id&_order=desc&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -52,7 +50,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&role=user`);
+            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&role=user&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -66,7 +64,7 @@ module.exports = {
         try {
 
             let params = obj;
-            return await axios.post(`${location_href}/users`, params, { headers: headers });
+            return await axios.post(`${location_href}/users?${apikey}&${apikey}`, params, { headers: headers });
 
         } catch (error) {
             console.log(error.message);
@@ -77,7 +75,7 @@ module.exports = {
     searchEmail: async (email) => {
         try {
 
-            let response = await axios.get(`${location_href}/users?email=${email}`);
+            let response = await axios.get(`${location_href}/users?email=${email}&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -88,7 +86,7 @@ module.exports = {
     searchUser: async (email, password) => {
         try {
 
-            let response = await axios.get(`${location_href}/users?email=${email}&password=${password}`);
+            let response = await axios.get(`${location_href}/users?email=${email}&password=${password}&${apikey}`);
             return response.data;
 
         } catch (error) {

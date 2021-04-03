@@ -6,7 +6,6 @@ const ejs = require('ejs');
 const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
-const dotenv = require('dotenv').config();
 const router = require('./src/routes');
 const settings = require('./settings');
 const localhost = `${settings.location.host}${settings.location.port}`;
@@ -17,12 +16,11 @@ const jsonServer = require('json-server');
 const db = path.join(__dirname, '/db/db.json');
 const routerDataBase = jsonServer.router(db);
 const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
-const { authentication } = require('./src/controllers/middlewares');
 
 // * ----- CONFIGURAÇÕES ----- *
 
 // chave secreta usada para gerar tokens com JSON Web Tokens
-app.set('superSecret', settings.secret);
+app.set('superSecret', process.env.SECRET);
 
 // configurar template engine ejs
 app.set('view engine', ejs);

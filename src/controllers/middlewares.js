@@ -32,12 +32,15 @@ module.exports = {
 
     authorization: (req, res, next) => {
 
+        let apikey = req.query.apikey;
+
         // se houver parâmetro query na url
-        if (req.query.apikey !== undefined) {
+        if (apikey !== undefined) {
 
             // se valor do parâmetro for igual a chave da API
-            if (req.query.apikey === process.env.APIKEY) {
-                console.log('Acesso autorizado a API');
+            if (apikey === process.env.APIKEY) {
+                
+                // conceder acesso à api
                 next();
             }
 
