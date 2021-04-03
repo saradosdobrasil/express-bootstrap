@@ -57,9 +57,9 @@ app.use(cors());
 // comprimir todas as rotas
 app.use(compression());
 
-// definir página de erro
+// definir página de erro (exibir página inicial)
 app.use((req, res, next) => {
-    res.render('ejs/error.ejs');
+    res.redirect('/');
 });
 
 
