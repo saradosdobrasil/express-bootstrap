@@ -3,23 +3,51 @@
     {
       "id": 1,
       "name": "Admin",
-      "password": "12345",
+      "password": "12345678",
       "email": "admin@mail.com",
       "role": "admin"
     },
     {
       "id": 2,
       "name": "User",
-      "password": "12345",
+      "password": "12345678",
       "email": "user@mail.com",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "name": "Alan Souza",
+      "password": "12345678",
+      "email": "alansouza@mail.com",
+      "role": "user"
+    },
+    {
+      "id": 4,
+      "name": "Sandra Nascimento",
+      "password": "12345678",
+      "email": "sandraanasc@mail.com",
+      "role": "user"
+    },
+    {
+      "id": 5,
+      "name": "Wagner Santos",
+      "password": "12345678",
+      "email": "wagnersantos82@mail.com",
       "role": "user"
     }
   ],
   "posts": [
     {
       "id": 1,
-      "title": "Teste 1",
-      "author": "Author"
+      "title": "Bem vindo(a)!",
+      "text": "Este é o primeiro post do Express Bootstrap. Em breve, traremos muitas novidades pra vocês!",
+      "date": "03/03/2021"
+    },
+    {
+      "id": 2,
+      "title": "Novidades!",
+      "text": "Agora o Express Bootstrap conta com uma área de acesso exclusiva para administradores. Acesse o sistema com uma conta de administrador para ver relatórios e gerenciar usuários.",
+      "date": "01/03/2021"
     }
   ]
 }

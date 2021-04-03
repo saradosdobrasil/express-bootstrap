@@ -35,6 +35,19 @@ module.exports = {
 
     },
 
+    getPosts: async () => {
+
+        try {
+
+            let response = await axios.get(`${location_href}/posts?_sort=id&_order=desc`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     getUsers: async () => {
 
         try {

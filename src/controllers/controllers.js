@@ -21,14 +21,21 @@ const get = {
             // exibir página do admin
             if (data.role === 'admin') {
 
+                // obter dados de usuários
                 let users = await database.getUsers();
 
+                // exibir página de admin e passar dados 
                 res.render('ejs/admin.ejs', { data, users });
             }
 
             // exibir página do usuário
             if (data.role === 'user') {
-                res.render('ejs/home.ejs', { data });
+
+                // obter dados de posts
+                let posts = await database.getPosts();
+
+                // exibir página de usuário e passar dados 
+                res.render('ejs/home.ejs', { data, posts });
             }
 
         } catch (error) {
@@ -46,6 +53,7 @@ const get = {
 // POST
 const post = {
 
+    // criação do token de acesso
     login: async (req, res, next) => {
 
         try {

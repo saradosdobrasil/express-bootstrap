@@ -3,23 +3,19 @@
 
         <!-- Main -->
         <main class="container-fluid h-100">
-            <div class="row py-3">
+            <div class="row p-3">
                 <div class="col">
 
-                    <h4 class="text-center py-2">
-                        Bem-vindo(a), <%- data.name -%>!
-                    </h4>
-
-                    <h6 class="py-2">
+                    <h4 class="py-4">
                         <i class="bi bi-server"></i>
                         Usuários
-                    </h6>
+                    </h4>
 
                     <form action='deleteuser' method='POST'>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr class="align-items-center">
+                                <thead class="thead-light">
+                                    <tr class="text-center">
                                         <th scope="col">Id</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Password</th>
@@ -29,20 +25,20 @@
                                 </thead>
                                 <tbody>
                                     <% users.map((user, index)=> { %>
-                                        <tr>
-                                            <td>
+                                        <tr class="text-center">
+                                            <td class="align-middle">
                                                 <%= user.id %>
                                             </td>
-                                            <td>
+                                            <td class="align-middle">
                                                 <%= user.name %>
                                             </td>
-                                            <td>
+                                            <td class="align-middle">
                                                 <%= user.password %>
                                             </td>
-                                            <td>
+                                            <td class="align-middle">
                                                 <%= user.email %>
                                             </td>
-                                            <td>
+                                            <td class="align-middle">
                                                 <button type="submit" class="btn btn-danger" id="<%= user.id %>"
                                                     name="id" value="<%= user.id %>">
                                                     <i class="bi bi-trash"></i>

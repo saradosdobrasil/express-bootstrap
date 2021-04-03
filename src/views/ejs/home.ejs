@@ -3,13 +3,34 @@
 
         <!-- Main -->
         <main class="container-fluid h-100">
-            <div class="row align-items-center h-100 ">
+            <div class="row p-3">
+
                 <div class="col">
-                    <h4>
-                        Bem-vindo(a), <%- data.name -%>!
-                    </h4>
                 </div>
+
                 <div class="col">
+                    <h4 class="py-4">
+                        <i class="bi bi-pencil-square"></i>
+                        Últimas Postagens
+                    </h4>
+
+                    <div class="card-deck">
+                        <% posts.map((post, index)=> { %>
+                            <div class="card mb-3 w-50">
+                                <div class="card-header">
+                                    <%= post.date %>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= post.title %>
+                                    </h5>
+                                    <p class="card-text">
+                                        <%= post.text %>
+                                    </p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
 
                 </div>
             </div>
