@@ -10,35 +10,37 @@
                     Gerenciar Postagens
                 </h4>
 
-                <table class="table table-bordered table-hover">
-                    <thead class="thead-light">
-                        <tr class="text-center">
-                            <th scope="col">Id</th>
-                            <th scope="col">Título</th>
-                            <th scope="col">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% posts.map((post, index)=> { %>
-                            <tr class="text-center">
-                                <td class="align-middle">
-                                    <%= post.id %>
-                                </td>
-                                <td class="align-middle">
-                                    <%= post.title %>
-                                </td>
-                                <td class="align-middle">
-                                    <button type="submit" class="btn btn-danger" id="<%= post.id %>" name="id"
-                                        value="<%= post.id %>">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <% }) %>
-                    </tbody>
-                </table>
-
-
+                <form action='deletepost' method='POST'>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr class="text-center">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Título</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% posts.map((post, index)=> { %>
+                                    <tr class="text-center">
+                                        <td class="align-middle">
+                                            <%= post.id %>
+                                        </td>
+                                        <td class="align-middle">
+                                            <%= post.title %>
+                                        </td>
+                                        <td class="align-middle">
+                                            <button type="submit" class="btn btn-danger" id="<%= post.id %>" name="id"
+                                                value="<%= post.id %>">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
 
             </div>
         </div>

@@ -18,6 +18,7 @@ router.get('/users', middlewares.authentication, controllers.get.users);
 
 // POST
 router.post('/deleteuser', controllers.del.deleteuser);
+router.post('/deletepost', controllers.del.deletepost);
 router.post('/login', controllers.post.login);
 router.post('/publish', controllers.post.publish);
 router.post('/signup', controllers.post.signup);

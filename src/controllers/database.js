@@ -8,6 +8,18 @@ const apikey = `apikey=${process.env.APIKEY}`;
 
 module.exports = {
 
+    deletePost: async (id) => {
+
+        try {
+
+            await axios.delete(`${location_href}/posts/${id}?${apikey}`);
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     deleteUser: async (id) => {
 
         try {

@@ -288,6 +288,23 @@ const del = {
         } catch (error) {
             console.log(error.message);
         }
+    },
+
+    deletepost: async (req, res, next) => {
+
+        try {
+
+            let id = req.body.id;
+
+            // deletar usuário pelo id
+            await database.deletePost(id);
+
+            // recarregar a página
+            res.redirect('back');
+
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 }
 
