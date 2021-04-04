@@ -8,9 +8,10 @@ let middlewares = require('./controllers/middlewares');
 // GET
 
 router.get('/', controllers.get.index);
-router.get('/api*', middlewares.authorization); // aplicar middleware de autorizacao a api com senha
+router.get('/api*', middlewares.authorization); // obter acesso a api
+router.get('/login', middlewares.authentication, controllers.get.login); // obter token de acesso
 router.get('/signup', controllers.get.signup);
-router.get('/login', middlewares.authentication, controllers.get.login);
+router.get('/users', middlewares.authentication, controllers.get.users);
 
 // POST
 router.post('/deleteuser', controllers.del.deleteuser);

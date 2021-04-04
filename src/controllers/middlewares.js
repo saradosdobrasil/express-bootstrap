@@ -23,6 +23,7 @@ module.exports = {
 
                 // guardar dados na requisição
                 req.data = data;
+                req.token = token;
 
                 // liberar acesso à rota
                 next();

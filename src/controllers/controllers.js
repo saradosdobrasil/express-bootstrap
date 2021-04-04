@@ -15,8 +15,9 @@ const get = {
 
         try {
 
-            // recuperar dados do usuário autenticado passados no middleware
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
             let data = req.data;
+            let token = req.token;
 
             // exibir página do admin
             if (data.role === 'admin') {
@@ -25,7 +26,7 @@ const get = {
                 let users = await database.getUsers();
 
                 // exibir página de admin e passar dados 
-                res.render('ejs/admin.ejs', { data, users });
+                res.render('ejs/admin.ejs', { data, users, token });
             }
 
             // exibir página do usuário
@@ -35,7 +36,7 @@ const get = {
                 let posts = await database.getPosts();
 
                 // exibir página de usuário e passar dados 
-                res.render('ejs/home.ejs', { data, posts });
+                res.render('ejs/home.ejs', { data, posts, token });
             }
 
         } catch (error) {
@@ -46,6 +47,29 @@ const get = {
 
     signup: (req, res, next) => {
         res.render('ejs/signup.ejs');
+    },
+
+    users: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // exibir página do usuário
+            if (data.role === 'admin') {
+
+                // obter dados de posts
+                let users = await database.getUsers();
+
+                // exibir página de usuários e passar dados 
+                res.render('ejs/users.ejs', { data, users, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
 }

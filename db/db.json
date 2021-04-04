@@ -34,6 +34,13 @@
       "password": "12345678",
       "email": "joaoavelarsouza@mail.com",
       "role": "user"
+    },
+    {
+      "id": 6,
+      "name": "Daniel Rodrigues Santos",
+      "password": "12345678",
+      "email": "danrodrigues12@mail.com",
+      "role": "user"
     }
   ],
   "posts": [
