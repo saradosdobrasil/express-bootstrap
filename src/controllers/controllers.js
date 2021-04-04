@@ -79,11 +79,8 @@ const get = {
             // se usuário é admin
             if (data.role === 'admin') {
 
-                // obter dados de posts
-                let users = await database.getUsers();
-
-                // exibir página de usuários e passar dados 
-                res.render('ejs/publish.ejs', { data, users, token });
+                // exibir página de publicação
+                res.render('ejs/publish.ejs', { data, token });
             }
 
         } catch (error) {
@@ -170,6 +167,7 @@ const post = {
 
             // recuperar token passado na url
             let token = req.query.token;
+            console.log(token);
 
             // criar objeto com dados enviados pelo formulário
             let obj = {};
