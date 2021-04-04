@@ -1,110 +1,111 @@
-<%- include("./partials/top-home") -%>
+<%- include("./partials/top") -%>
     <%- include("./partials/nav-admin") -%>
 
-        <!-- Main -->
-        <main class="container-fluid h-100">
-            <div class="row p-3">
-                <div class="col">
+        <div v-cloak id="app" class="d-flex flex-column min-vh-100">
+            <main class="container-fluid flex-fill">
+                <div class="row p-3">
+                    <div class="col">
 
-                    <h4 class="py-4">
-                        <i class="bi bi-person-circle"></i>
-                        Área do Administrador
-                    </h4>
+                        <h4 class="py-4">
+                            <i class="bi bi-person-circle"></i>
+                            Área do Administrador
+                        </h4>
 
-                    <div class="card-deck">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <h5 class="card-title">
-                                            <a class="text-decoration-none" href="">
-                                                Editar Perfil
-                                            </a>
-                                        </h5>
-                                        <p>Altere o e-mail e a senha de acesso a conta de administrador.</p>
-                                    </div>
-                                    <div class="col-3">
-                                        <h2 class="text-right">
-                                            <i class="bi bi-person-circle"></i>
-                                        </h2>
+                        <div class="card-deck">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <h5 class="card-title">
+                                                <a class="text-decoration-none" href="">
+                                                    Editar Perfil
+                                                </a>
+                                            </h5>
+                                            <p>Altere o e-mail e a senha de acesso a conta de administrador.</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <h2 class="text-right">
+                                                <i class="bi bi-person-circle"></i>
+                                            </h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <h5 class="card-title">
-                                            <a class="text-decoration-none" href="/admins?token=<%- token -%>">
-                                                Lista de Administradores
-                                            </a>
-                                        </h5>
-                                        <p>Visualize e gerencie o acesso de administradores cadastrados.</p>
-                                    </div>
-                                    <div class="col-3">
-                                        <h2 class="text-right">
-                                            <i class="bi bi-people-fill"></i>
-                                        </h2>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <h5 class="card-title">
+                                                <a class="text-decoration-none" href="/admins?token=<%- token -%>">
+                                                    Lista de Administradores
+                                                </a>
+                                            </h5>
+                                            <p>Visualize e gerencie o acesso de administradores cadastrados.</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <h2 class="text-right">
+                                                <i class="bi bi-people-fill"></i>
+                                            </h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <h5 class="card-title">
-                                            <a class="text-decoration-none" href="/users?token=<%- token -%>">
-                                                Lista de Usuários
-                                            </a>
-                                        </h5>
-                                        <p>Visualize e gerencie o acesso de usuários cadastrados.</p>
-                                    </div>
-                                    <div class="col-3">
-                                        <h2 class="text-right">
-                                            <i class="bi bi-people-fill"></i>
-                                        </h2>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <h5 class="card-title">
+                                                <a class="text-decoration-none" href="/users?token=<%- token -%>">
+                                                    Lista de Usuários
+                                                </a>
+                                            </h5>
+                                            <p>Visualize e gerencie o acesso de usuários cadastrados.</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <h2 class="text-right">
+                                                <i class="bi bi-people-fill"></i>
+                                            </h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row p-3">
-                <div class="col">
-                    <div class="card-deck">
+                <div class="row p-3">
+                    <div class="col">
+                        <div class="card-deck">
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <h5 class="card-title">
-                                            <a class="text-decoration-none" href="/publish?token=<%- token -%>">
-                                                Publicar Postagem
-                                            </a>
-                                        </h5>
-                                        <p>Adicione e publique uma nova postagem visível a todos os usuários
-                                            cadastrados.</p>
-                                    </div>
-                                    <div class="col-3">
-                                        <h2 class="text-right">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </h2>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <h5 class="card-title">
+                                                <a class="text-decoration-none" href="/publish?token=<%- token -%>">
+                                                    Publicar Postagem
+                                                </a>
+                                            </h5>
+                                            <p>Adicione e publique uma nova postagem visível a todos os usuários
+                                                cadastrados.</p>
+                                        </div>
+                                        <div class="col-3">
+                                            <h2 class="text-right">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
 
         <%- include("./partials/footer") -%>
             <%- include("./partials/bottom") -%>

@@ -39,23 +39,9 @@ let vue = new Vue({
         onSubmit(event) {
             // console.log("event.preventDefault() acionado:", event);
         },
-
-        async getData() {
-            try {
-                let response = await axios.get(`${this.api}/posts`);
-                this.posts = response.data;
-                console.log("✔️ Dados:", response.data);
-            } catch (err) {
-                console.log("⚠️ Atenção...");
-                console.log("❌ Erro!");
-                console.log(err);
-            }
-        },
-
     },
 
     mounted() {
-        this.getData();
     }
 
 });

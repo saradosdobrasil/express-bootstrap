@@ -1,55 +1,57 @@
 <%- include("./partials/top") -%>
 
-    <!-- Main -->
-    <main class="container-fluid h-100">
-        <div class="row align-items-center h-100 signup">
-            <div class="col-6">
+    <div v-cloak id="app" class="h-100">
+        <main class="container-fluid h-100">
+            <div class="row align-items-center h-100 signup">
+                <div class="col-6">
 
-                <h1 class="text-center">
-                    <a class="text-decoration-none text-dark" href="/">
-                        {{ texts.title }}
-                    </a>
-                </h1>
-                
-            </div>
-            <div class="col-6 bg-light border border-top-0 border-right-0 border-bottom-0 h-100">
-                <div class="row align-items-center h-100 p-5">
-                    <div class="col">
-                        <h4 class="py-4">
-                            {{ texts.createAccount }}
-                        </h4>
+                    <h1 class="text-center">
+                        <a class="text-decoration-none text-dark" href="/">
+                            {{ texts.title }}
+                        </a>
+                    </h1>
 
-                        <form action='signup' method='POST'>
+                </div>
+                <div class="col-6 bg-light border border-top-0 border-right-0 border-bottom-0 h-100">
+                    <div class="row align-items-center h-100 p-5">
+                        <div class="col">
+                            <h4 class="py-4">
+                                {{ texts.createAccount }}
+                            </h4>
 
-                            <div class="form-group">
-                                <label for="email">{{ texts.name }}</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
+                            <form action='signup' method='POST'>
 
-                            <div class="form-group">
-                                <label for="email">{{ texts.email }}</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
+                                <div class="form-group">
+                                    <label for="email">{{ texts.name }}</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="password">{{ texts.password }}</label>
-                                <input type="password" class="form-control" id="password" name="password" minlength="8" required>
-                            </div>
+                                <div class="form-group">
+                                    <label for="email">{{ texts.email }}</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
 
-                            <button type="submit" class="btn btn-success">{{ texts.register }}</button>
-                        </form>
+                                <div class="form-group">
+                                    <label for="password">{{ texts.password }}</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        minlength="8" required>
+                                </div>
 
-                        <%if (this.alert && alert === 'user already registered' ) { %>
-                            <div class="alert alert-alert text-center mt-5 p-3" role="alert">
-                                Usuário já cadastrado!
-                                <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
-                            </div>
-                        <% } %>
+                                <button type="submit" class="btn btn-success">{{ texts.register }}</button>
+                            </form>
 
+                            <%if (this.alert && alert==='user already registered' ) { %>
+                                <div class="alert alert-alert text-center mt-5 p-3" role="alert">
+                                    Usuário já cadastrado!
+                                    <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
+                                </div>
+                                <% } %>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <%- include("./partials/bottom") -%>
