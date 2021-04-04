@@ -68,6 +68,30 @@ const get = {
 
     },
 
+    manageposts: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // se usuario é admin
+            if (data.role === 'admin') {
+
+                // obter dados de usuários
+                let posts = await database.getPosts();
+
+                // exibir página e passar dados 
+                res.render('ejs/manage-posts.ejs', { data, posts, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     publish: async (req, res, next) => {
 
         try {

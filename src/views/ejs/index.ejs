@@ -1,63 +1,61 @@
-<%- include("./partials/top") -%>
+<%- include("./partials/top-home") -%>
 
-    <div v-cloak id="app" class="h-100">
-        <main class="container-fluid h-100">
-            <div class="row align-items-center h-100 login">
-                <div class="col-6">
+    <div class="row align-items-center h-100 login">
+        <div class="col-6">
 
-                    <h1 class="text-center">
-                        <a class="text-decoration-none text-dark" href="/">
-                            {{ texts.title }}
-                        </a>
-                    </h1>
-                    
-                </div>
-                <div class="col-6 bg-light border border-top-0 border-right-0 border-bottom-0 h-100">
-                    <div class="row align-items-center h-100 p-5">
-                        <div class="col">
-                            <h4 class="py-4">
-                                {{ texts.login }}
-                            </h4>
+            <h1 class="text-center">
+                <a class="text-decoration-none text-dark" href="/">
+                    {{ texts.title }}
+                </a>
+            </h1>
 
-                            <form action='login' method='POST'>
-                                <div class="form-group">
-                                    <label for="email">{{ texts.email }}</label>
-                                    <input type="email" class="form-control" id="email" name="email" value="admin@mail.com" required>
-                                </div>
+        </div>
+        <div class="col-6 bg-light border border-top-0 border-right-0 border-bottom-0 h-100">
+            <div class="row align-items-center h-100 p-5">
+                <div class="col">
+                    <h4 class="py-4">
+                        {{ texts.login }}
+                    </h4>
 
-                                <div class="form-group">
-                                    <label for="password">{{ texts.password }}</label>
-                                    <input type="password" class="form-control" id="password" name="password" value="12345678" required>
-                                </div>
+                    <form action='login' method='POST'>
+                        <div class="form-group">
+                            <label for="email">{{ texts.email }}</label>
+                            <input type="email" class="form-control" id="email" name="email" value="admin@mail.com"
+                                required>
+                        </div>
 
-                                <button type="submit" class="btn btn-success">{{ texts.enter }}</button>
-                            </form>
+                        <div class="form-group">
+                            <label for="password">{{ texts.password }}</label>
+                            <input type="password" class="form-control" id="password" name="password" value="12345678"
+                                required>
+                        </div>
 
-                            <%if (alert === 'login' ) { %>
-                                <div class="alert alert-info text-center mt-5 p-3" role="alert">
-                                    Novo por aqui?
-                                    <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
-                                </div>
-                            <% } %>
+                        <button type="submit" class="btn btn-success">{{ texts.enter }}</button>
+                    </form>
 
-                            <%if (alert === 'user already registered' ) { %>
+                    <%if (alert==='login' ) { %>
+                        <div class="alert alert-info text-center mt-5 p-3" role="alert">
+                            Novo por aqui?
+                            <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
+                        </div>
+                        <% } %>
+
+                            <%if (alert==='user already registered' ) { %>
                                 <div class="alert alert-warning text-center mt-5 p-3" role="alert">
                                     Usuário já cadastrado! Digite suas credenciais de acesso.
                                 </div>
-                            <% } %>
+                                <% } %>
 
-                            <%if (alert === 'user not found' ) { %>
-                                <div class="alert alert-danger text-center mt-5 p-3" role="alert">
-                                    Usuário não encontrado!
-                                    <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
-                                </div>
-                            <% } %>
+                                    <%if (alert==='user not found' ) { %>
+                                        <div class="alert alert-danger text-center mt-5 p-3" role="alert">
+                                            Usuário não encontrado!
+                                            <a href="/signup" class="alert-link">{{ texts.signup }}.</a>
+                                        </div>
+                                        <% } %>
 
-                        </div>
-                    </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
-<%- include("./partials/bottom") -%>
+    <%- include("./partials/footer-home") -%>
