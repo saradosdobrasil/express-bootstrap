@@ -1,5 +1,7 @@
 "use strict";
 
+const settings = require('../../settings');
+
 class User {
 
     constructor(id, name, password, email) {
@@ -10,9 +12,10 @@ class User {
         this.role = this.defineRole();
     }
 
-    // define quem é administrador e quem é usuário pelo e-mail
+    // define papel de administrador e usuário do sistema pelo email
     defineRole() {
-        if (this.email === 'admin@mail.com') {
+        // se email está incluído no array de 'settings.admin'
+        if (settings.admin.includes(this.email)) {
             return 'admin';
         } else {
             return 'user';

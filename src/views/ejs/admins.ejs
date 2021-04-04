@@ -1,0 +1,63 @@
+<%- include("./partials/top-home") -%>
+    <%- include("./partials/nav-admin") -%>
+
+        <!-- Main -->
+        <main class="container-fluid h-100">
+            <div class="row p-3">
+                <div class="col">
+
+                    <h4 class="py-4">
+                        <i class="bi bi-people-fill"></i>
+                        Lista de Administradores
+                    </h4>
+
+                    <form action='deleteadmin' method='POST'>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr class="text-center">
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Senha</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Acesso</th>
+                                        <th scope="col">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% admins.map((admin, index)=> { %>
+                                        <tr class="text-center">
+                                            <td class="align-middle">
+                                                <%= admin.id %>
+                                            </td>
+                                            <td class="align-middle">
+                                                <%= admin.name %>
+                                            </td>
+                                            <td class="align-middle">
+                                                <%= admin.password %>
+                                            </td>
+                                            <td class="align-middle">
+                                                <%= admin.email %>
+                                            </td>
+                                            <td class="align-middle">
+                                                <%= admin.role %>
+                                            </td>
+                                            <td class="align-middle">
+                                                <button type="submit" class="btn btn-danger" id="<%= admin.id %>"
+                                                    name="id" value="<%= admin.id %>">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </main>
+
+        <%- include("./partials/footer") -%>
+            <%- include("./partials/bottom") -%>

@@ -8,4 +8,5 @@ module.exports = {
         host: "http://localhost:",
         port: process.env.PORT || 3000
     },
+    admin: ['admin@mail.com', 'danilo@mail.com']
 };

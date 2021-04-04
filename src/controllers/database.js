@@ -20,11 +20,37 @@ module.exports = {
 
     },
 
+    getAdmins: async () => {
+
+        try {
+
+            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&role=admin&${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     getLastUser: async () => {
 
         try {
 
             let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&_limit=1&${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+    getLastPost: async () => {
+
+        try {
+
+            let response = await axios.get(`${location_href}/posts?_sort=id&_order=desc&_limit=1&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -59,12 +85,25 @@ module.exports = {
 
     },
 
+    savePost: async (obj) => {
+
+        try {
+
+            let params = obj;
+            return await axios.post(`${location_href}/posts?${apikey}`, params, { headers: headers });
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     saveUser: async (obj) => {
 
         try {
 
             let params = obj;
-            return await axios.post(`${location_href}/users?${apikey}&${apikey}`, params, { headers: headers });
+            return await axios.post(`${location_href}/users?${apikey}`, params, { headers: headers });
 
         } catch (error) {
             console.log(error.message);

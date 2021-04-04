@@ -7,6 +7,29 @@ const database = require('./database');
 // GET
 const get = {
 
+    admins: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // se usuário é admin
+            if (data.role === 'admin') {
+
+                // obter dados de posts
+                let admins = await database.getAdmins();
+
+                // exibir página de usuários e passar dados 
+                res.render('ejs/admins.ejs', { data, admins, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     index: (req, res, next) => {
         res.render('ejs/index.ejs', { alert: 'login' });
     },
@@ -26,7 +49,7 @@ const get = {
                 let users = await database.getUsers();
 
                 // exibir página de admin e passar dados 
-                res.render('ejs/admin.ejs', { data, users, token });
+                res.render('ejs/home-admin.ejs', { data, users, token });
             }
 
             // exibir página do usuário
@@ -45,6 +68,29 @@ const get = {
 
     },
 
+    publish: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // se usuário é admin
+            if (data.role === 'admin') {
+
+                // obter dados de posts
+                let users = await database.getUsers();
+
+                // exibir página de usuários e passar dados 
+                res.render('ejs/publish.ejs', { data, users, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     signup: (req, res, next) => {
         res.render('ejs/signup.ejs');
     },
@@ -57,7 +103,7 @@ const get = {
             let data = req.data;
             let token = req.token;
 
-            // exibir página do usuário
+            // se usuário é admin
             if (data.role === 'admin') {
 
                 // obter dados de posts
@@ -101,8 +147,6 @@ const post = {
                 // obter nome do usuário
                 let name = searchUser[0].name;
 
-                let id = searchUser[0].id;
-
                 // obter papel do usuário
                 let role = searchUser[0].role;
 
@@ -110,9 +154,49 @@ const post = {
                 const token = jwt.sign({ name, email, role }, req.app.get('superSecret'));
 
                 // redirecionar à rota de autenticação
-                res.redirect(`/login?id=${id}&token=` + token);
+                res.redirect(`/login?token=` + token);
 
             }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+    publish: async (req, res, next) => {
+
+        try {
+
+            // recuperar token passado na url
+            let token = req.query.token;
+
+            // criar objeto com dados enviados pelo formulário
+            let obj = {};
+            obj.id = '';
+            obj.title = req.body.title;
+            obj.text = req.body.text;
+            obj.date = req.body.date;
+
+            // ajustar data para padrão dd/mm/yyyy
+            let newDate = obj.date.split('-');
+            newDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
+            obj.date = newDate;
+
+            // obter id do último post
+            let lastPost = await database.getLastPost();
+
+            if (lastPost.length === 0) {
+                obj.id = 1;
+            } else {
+                obj.id = lastPost[0].id + 1;
+            }
+
+            // salvar post
+            await database.savePost(obj);
+
+            // redirecionar a pagina de login
+            res.redirect('/login?token=' + token);
 
         } catch (error) {
             console.log(error.message);

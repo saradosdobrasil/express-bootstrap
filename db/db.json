@@ -41,6 +41,13 @@
       "password": "12345678",
       "email": "danrodrigues12@mail.com",
       "role": "user"
+    },
+    {
+      "id": 7,
+      "name": "Danilo Alves",
+      "password": "12345678",
+      "email": "danilo@mail.com",
+      "role": "admin"
     }
   ],
   "posts": [

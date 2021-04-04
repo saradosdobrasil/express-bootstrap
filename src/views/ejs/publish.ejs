@@ -1,0 +1,47 @@
+<%- include("./partials/top-home") -%>
+    <%- include("./partials/nav-admin") -%>
+
+        <!-- Main -->
+        <main class="container-fluid h-100">
+            <div class="row p-3">
+                <div class="col">
+
+                    <h4 class="py-4">
+                        <i class="bi bi-pencil-square"></i>
+                        Publicar Postagem
+                    </h4>
+
+                    <form action='publish' method='POST'>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="title">Título</label>
+                                    <input type="title" class="form-control" id="title" name="title" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="date">Data</label>
+                                    <input type="date" class="form-control" id="date" name="date" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="textarea">Texto</label>
+                                    <textarea class="form-control" id="textarea" name="textarea" rows="7"
+                                        required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-success">Publicar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <%- include("./partials/footer") -%>
+            <%- include("./partials/bottom") -%>
