@@ -31,6 +31,7 @@ module.exports = {
         });
     },
 
+    // proteger acesso a api com senha
     authorization: (req, res, next) => {
 
         let apikey = req.query.apikey;
@@ -40,7 +41,7 @@ module.exports = {
 
             // se valor do parâmetro for igual a chave da API
             if (apikey === process.env.APIKEY) {
-                
+
                 // conceder acesso à api
                 next();
             }

@@ -10,13 +10,14 @@
                     Gerenciar Postagens
                 </h4>
 
-                <form action='deletepost' method='POST'>
+                <form method='POST'>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead class="thead-light">
                                 <tr class="text-center">
                                     <th scope="col">Id</th>
                                     <th scope="col">Título</th>
+                                    <th scope="col">Data</th>
                                     <th scope="col">Ações</th>
                                 </tr>
                             </thead>
@@ -30,9 +31,17 @@
                                             <%= post.title %>
                                         </td>
                                         <td class="align-middle">
-                                            <button type="submit" class="btn btn-danger" id="<%= post.id %>" name="id"
-                                                value="<%= post.id %>">
+                                            <%= post.date %>
+                                        </td>
+                                        <td class="align-middle">
+                                            <button type="submit" formaction="deletepost" class="btn btn-danger mx-1"
+                                                id="<%= post.id %>" name="id" value="<%= post.id %>">
                                                 <i class="bi bi-trash"></i>
+                                            </button>
+
+                                            <button type="submit" formaction="editpost" class="btn btn-primary mx-1"
+                                                id="<%= post.id %>" name="id" value="<%= post.id %>">
+                                                <i class="bi bi-pencil"></i>
                                             </button>
                                         </td>
                                     </tr>

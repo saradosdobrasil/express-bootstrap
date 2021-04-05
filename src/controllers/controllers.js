@@ -103,8 +103,11 @@ const get = {
             // se usuário é admin
             if (data.role === 'admin') {
 
+                // obter data dd/mm/yyy
+                let date = generateDate();
+
                 // exibir página de publicação
-                res.render('ejs/publish.ejs', { data, token });
+                res.render('ejs/publish.ejs', { data, token, date });
             }
 
         } catch (error) {
@@ -171,8 +174,8 @@ const post = {
                 // obter papel do usuário
                 let role = searchUser[0].role;
 
-                // gerar token JWT
-                const token = jwt.sign({ name, email, role }, req.app.get('superSecret'));
+                // gerar token JWT (expira em 1 hora)
+                const token = jwt.sign({ name, email, role }, req.app.get('superSecret'), { expiresIn: '1h' });
 
                 // redirecionar à rota de autenticação
                 res.redirect(`/login?token=` + token);
@@ -268,8 +271,49 @@ const post = {
         }
 
     },
+
+    updatepost: async (req, res, next) => {
+
+        try {
+
+            let id = req.body.id;
+
+            // deletar usuário pelo id
+            await database.deletePost(id);
+
+            // recarregar a página
+            res.redirect('back');
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
 }
 
+// PUT
+const put = {
+
+    updatepost: async (req, res, next) => {
+
+        try {
+
+            let id = req.body.id;
+
+            // deletar usuário pelo id
+            await database.deletePost(id);
+
+            // recarregar a página
+            res.redirect('back');
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+}
 // DELETE
 const del = {
 
@@ -294,10 +338,11 @@ const del = {
 
         try {
 
+            let token = req.query.token;
             let id = req.body.id;
 
             // deletar usuário pelo id
-            await database.deletePost(id);
+            let data = await database.getPostById(id);
 
             // recarregar a página
             res.redirect('back');
@@ -308,6 +353,25 @@ const del = {
     }
 }
 
-module.exports = {
-    get, post, del
+// gerar data no padrão internacional yyyy/mm/dd
+function generateDate() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
 }
+
+module.exports = {
+    get, post, put, del
+}
+
+/*
+
+    Referências
+
+    [1] How do I get the current date in JavaScript?
+        https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
+
+*/

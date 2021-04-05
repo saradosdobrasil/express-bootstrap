@@ -71,6 +71,19 @@ module.exports = {
 
     },
 
+    getPostById: async (id) => {
+
+        try {
+
+            let response = await axios.get(`${location_href}/posts/${id}&${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     getPosts: async () => {
 
         try {
