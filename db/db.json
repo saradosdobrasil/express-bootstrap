@@ -34,13 +34,6 @@
       "password": "12345678",
       "email": "joaoavelarsouza@mail.com",
       "role": "user"
-    },
-    {
-      "id": 6,
-      "name": "Daniel Rodrigues Santos",
-      "password": "12345678",
-      "email": "danrodrigues12@mail.com",
-      "role": "user"
     }
   ],
   "posts": [
@@ -52,9 +45,9 @@
     },
     {
       "id": 2,
-      "title": "Novidades!",
-      "text": "Agora o Express Bootstrap conta com uma área de acesso exclusiva para administradores. Acesse o sistema com uma conta de administrador para ver relatórios e gerenciar usuários.",
-      "date": "01/03/2021"
+      "title": "Novos Recursos",
+      "text": "Agora é possível publicar, excluir e atualizar postagens com o Express Bootstrap!",
+      "date": "05/04/2021"
     }
   ]
 }

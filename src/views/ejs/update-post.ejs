@@ -5,23 +5,25 @@
             <div class="col">
 
                 <h4 class="py-4">
-                    <i class="bi bi-pencil-square"></i>
-                    Publicar Postagem
+                    <i class="bi bi-pencil"></i>
+                    Editar Postagem
                 </h4>
 
-                <form action='publish?token=<%- token -%>' method='POST'>
+                <form action='saveeditions?token=<%- token -%>&id=<%- id -%>' method='POST'>
 
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="title">Título</label>
-                                <input type="title" class="form-control" id="title" name="title" required>
+                                <input type="title" class="form-control" id="title" name="title"
+                                    value="<%- post.title -%>" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="date">Data</label>
-                                <input type="date" class="form-control" id="date" name="date" value="<%- date -%>" required>
+                                <input type="date" class="form-control" id="date" name="date" value="<%- post.date -%>"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -30,10 +32,10 @@
                             <div class="form-group">
                                 <label for="textarea">Texto</label>
                                 <textarea class="form-control" id="text" name="text" rows="7"
-                                    required></textarea>
+                                    required><%- post.text -%></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-success">Publicar</button>
+                            <button type="submit" class="btn btn-success">Atualizar</button>
                         </div>
                     </div>
                 </form>

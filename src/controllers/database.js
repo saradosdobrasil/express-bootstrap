@@ -75,7 +75,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/posts/${id}&${apikey}`);
+            let response = await axios.get(`${location_href}/posts/${id}?${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -97,6 +97,19 @@ module.exports = {
 
     },
 
+    getUserById: async (id) => {
+
+        try {
+
+            let response = await axios.get(`${location_href}/users/${id}?${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     getUsers: async () => {
 
         try {
@@ -108,6 +121,18 @@ module.exports = {
             console.log(error.message);
         }
 
+    },
+
+    saveEditions: async (obj) => {
+        try {
+
+            let params = obj;
+            return await axios.put(`${location_href}/posts/${obj.id}?${apikey}`, params, { headers: headers });
+
+
+        } catch (error) {
+            console.log(error.message);
+        }
     },
 
     savePost: async (obj) => {
@@ -156,5 +181,7 @@ module.exports = {
         } catch (error) {
             console.log(error.message);
         }
-    }
+    },
+
+
 }

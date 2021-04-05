@@ -14,6 +14,7 @@ router.get('/login', middlewares.authentication, controllers.get.login);
 router.get('/manageposts', middlewares.authentication, controllers.get.manageposts);
 router.get('/publish', middlewares.authentication, controllers.get.publish);
 router.get('/signup', controllers.get.signup);
+router.get('/updatepost', middlewares.authentication, controllers.get.updatepost);
 router.get('/users', middlewares.authentication, controllers.get.users);
 
 // POST
@@ -21,10 +22,8 @@ router.post('/deleteuser', controllers.del.deleteuser);
 router.post('/deletepost', controllers.del.deletepost);
 router.post('/login', controllers.post.login); // obter token de acesso
 router.post('/publish', controllers.post.publish);
+router.post('/saveeditions', controllers.put.saveeditions);
 router.post('/signup', controllers.post.signup);
 router.post('/updatepost', controllers.post.updatepost);
-
-// PUT
-router.put('/updatepost', controllers.put.updatepost);
 
 module.exports = router;

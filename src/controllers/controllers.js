@@ -119,6 +119,37 @@ const get = {
         res.render('ejs/signup.ejs');
     },
 
+    updatepost: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // recuperar id de usuário
+            let id = req.query.id;
+
+            // se usuário é admin
+            if (data.role === 'admin') {
+
+                // obter dados do post
+                let post = await database.getPostById(id);
+
+                // ajustar data de dd/mm/yyyy para o padrão yyyy-mm-dd
+                let resetDate = post.date.split('/');
+                resetDate = `${resetDate[2]}-${resetDate[1]}-${resetDate[0]}`;
+                post.date = resetDate;
+
+                // exibir página de usuários e passar dados 
+                res.render('ejs/update-post.ejs', { data, id, post, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     users: async (req, res, next) => {
 
         try {
@@ -194,7 +225,6 @@ const post = {
 
             // recuperar token passado na url
             let token = req.query.token;
-            console.log(token);
 
             // criar objeto com dados enviados pelo formulário
             let obj = {};
@@ -276,13 +306,14 @@ const post = {
 
         try {
 
+            // obter token da url
+            let token = req.query.token;
+
+            // obter id do formulário
             let id = req.body.id;
 
-            // deletar usuário pelo id
-            await database.deletePost(id);
-
-            // recarregar a página
-            res.redirect('back');
+            // carregar página da postagem
+            res.redirect(`/updatepost?token=${token}&id=${id}`);
 
         } catch (error) {
             console.log(error.message);
@@ -295,17 +326,30 @@ const post = {
 // PUT
 const put = {
 
-    updatepost: async (req, res, next) => {
+    saveeditions: async (req, res, next) => {
 
         try {
 
-            let id = req.body.id;
+            // recuperar token passado na url
+            let token = req.query.token;
 
-            // deletar usuário pelo id
-            await database.deletePost(id);
+            // criar objeto com dados enviados pelo formulário
+            let obj = {};
+            obj.id = req.query.id; // id da url
+            obj.title = req.body.title;
+            obj.text = req.body.text;
+            obj.date = req.body.date;
 
-            // recarregar a página
-            res.redirect('back');
+            // ajustar data para padrão dd/mm/yyyy
+            let newDate = obj.date.split('-');
+            newDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
+            obj.date = newDate;
+
+            // atualizar post
+            await database.saveEditions(obj);
+
+            // redirecionar a pagina de login
+            res.redirect('/login?token=' + token);
 
         } catch (error) {
             console.log(error.message);
@@ -338,11 +382,10 @@ const del = {
 
         try {
 
-            let token = req.query.token;
             let id = req.body.id;
 
             // deletar usuário pelo id
-            let data = await database.getPostById(id);
+            await database.deletePost(id);
 
             // recarregar a página
             res.redirect('back');
