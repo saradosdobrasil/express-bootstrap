@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">{{ texts.title }}</a>
+    <a class="navbar-brand" href="/login?token=<%- token -%>">{{ texts.title }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,18 +7,15 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Link 1<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link 2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link 3</a>
+                <a class="nav-link" href="/login?token=<%- token -%>">
+                    Início
+                    <span class="sr-only">(current)</span>
+                </a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    Dropdown link
+                    Menu
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Action</a>
@@ -30,10 +27,14 @@
     </div>
     <span class="navbar-text">
         <i class="bi bi-person-fill text-success font-weight-normal"></i>
-        <span class="text-white ml-1 mr-3"><%- data.name -%></span>
- 
+        <span class="text-white ml-1 mr-3">
+            <%- data.name -%>
+        </span>
+
         <i class="bi bi-envelope text-success font-weight-normal"></i>
-        <span class="text-white ml-1 mr-3"><%- data.email -%></span>
+        <span class="text-white ml-1 mr-3">
+            <%- data.email -%>
+        </span>
 
         <i class="bi bi-box-arrow-in-right text-warning"></i>
         <a class="text-decoration-none ml-1 mr-3" href="/">Sair</a>

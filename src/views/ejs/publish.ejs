@@ -9,8 +9,7 @@
                     Publicar Postagem
                 </h4>
 
-                <form action='publish?token=<%- token -%>' method='POST'>
-
+                <form>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -21,7 +20,8 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="date">Data</label>
-                                <input type="date" class="form-control" id="date" name="date" value="<%- date -%>" required>
+                                <input type="date" class="form-control" id="date" name="date" value="<%- date -%>"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -29,11 +29,11 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="textarea">Texto</label>
-                                <textarea class="form-control" id="text" name="text" rows="7"
-                                    required></textarea>
+                                <textarea class="form-control" id="text" name="text" rows="7" required></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-success">Publicar</button>
+                            <button type="submit" formaction='publish?token=<%- token -%>' formmethod='POST'
+                                class="btn btn-success">Publicar</button>
                         </div>
                     </div>
                 </form>
