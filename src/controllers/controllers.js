@@ -58,6 +58,14 @@ const get = {
                 // obter dados de posts
                 let posts = await database.getPosts();
 
+                // criar resumo dos textos
+                let length = 100;
+                posts.forEach(post => {
+                    if (post.text.length > length) {
+                        post.text = post.text.substring(0, length) + "...";
+                    }
+                });
+
                 // exibir página de usuário e passar dados 
                 res.render('ejs/home.ejs', { data, posts, token });
             }
@@ -105,9 +113,11 @@ const get = {
 
             // obter dados de usuários
             let post = await database.getPostById(id);
+            let previous = await database.getPreviousPostById(id);
+            let next = await database.getNextPostById(id);
 
             // exibir página da postagem
-            res.render('ejs/post.ejs', { data, post, token });
+            res.render('ejs/post.ejs', { data, post, previous, next, token });
 
 
         } catch (error) {
@@ -257,9 +267,17 @@ const post = {
             obj.text = req.body.text;
             obj.date = req.body.date;
 
-            // extrair url do código embutido do vídeo
-            obj.video = obj.video.split('src="')[1];
-            obj.video = obj.video.split('"')[0];
+            if (obj.video !== "") {
+                // procurar string 'src' no campo
+                let hasSource = obj.video.search('src=');
+                if (hasSource !== -1) {
+                    // extrair url do código embutido do vídeo
+                    obj.video = obj.video.split('src="')[1];
+                    obj.video = obj.video.split('"')[0];
+                } else {
+                    obj.video = '';
+                }
+            }
 
             // ajustar data para padrão dd/mm/yyyy
             let newDate = obj.date.split('-');

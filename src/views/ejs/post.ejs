@@ -6,7 +6,7 @@
                 <div class="col py-4">
                     <div class="card">
                         <div class="card-header">
-                            <a href="/post?id=<%= post.id %>&token=<%= token %>">
+                            <a class="text-decoration-none" href="/post?id=<%= post.id %>&token=<%= token %>">
                                 <%= post.date %>
                             </a>
                         </div>
@@ -23,7 +23,26 @@
                             <% } %>
 
                             <div class="card-text post"><%= post.text %></div>
-
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <%if (previous !== undefined) { %>
+                                        <a class="text-decoration-none" href="/post?id=<%= previous.id %>&token=<%= token %>">
+                                            <i class="bi bi-chevron-left"></i>
+                                            <%= previous.title %>
+                                        </a>
+                                    <% } %>
+                                </div>
+                                <div class="col">
+                                    <%if (next !== undefined) { %>
+                                        <a class="text-decoration-none float-right" href="/post?id=<%= next.id %>&token=<%= token %>">
+                                            <%= next.title %>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    <% } %>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

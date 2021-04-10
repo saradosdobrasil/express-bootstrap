@@ -32,34 +32,27 @@
 
                 </div>
 
-                <div class="col-8">
-                    <h4 class="py-4">
-                        <i class="bi bi-pencil-square"></i>
-                        Últimas Postagens
-                    </h4>
-
+                <div class="col-8 py-4">
+                    <div class="card-columns">
                     <% posts.map((post, index)=> { %>
                         <div class="card mb-3">
                             <div class="card-header">
-                                <a href="/post?id=<%= post.id %>&token=<%= token %>"><%= post.date %></a>
+                                <a class="text-decoration-none" href="/post?id=<%= post.id %>&token=<%= token %>"><%= post.date %></a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <%= post.title %>
                                 </h5>
 
-                                <%if (post.video) { %>
-                                    <div class="my-4 iframe">
-                                        <iframe class="responsive-iframe" src="<%= post.video %>" frameborder="0"
-                                            allowfullscreen></iframe>
-                                    </div>
-                                <% } %>
-
-                                <div class="card-text post"><%= post.text %></div>
+                                <div class="card-text"><%= post.text %></div>
 
                             </div>
+                            <div class="card-footer">
+                                2 days ago
+                            </div>
                         </div>
-                        <% }) %>
+                    <% }) %>
+                    </div>
                 </div>
             </div>
         </main>

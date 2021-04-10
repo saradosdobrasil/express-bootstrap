@@ -71,10 +71,38 @@ module.exports = {
 
     },
 
+    getNextPostById: async (id) => {
+
+        try {
+
+            id = Number(id) + 1;
+            let response = await axios.get(`${location_href}/posts/${id}?${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     getPostById: async (id) => {
 
         try {
 
+            let response = await axios.get(`${location_href}/posts/${id}?${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+    getPreviousPostById: async (id) => {
+
+        try {
+
+            id = Number(id) - 1;
             let response = await axios.get(`${location_href}/posts/${id}?${apikey}`);
             return response.data;
 
