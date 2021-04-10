@@ -92,6 +92,29 @@ const get = {
 
     },
 
+    post: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // recuperar id do post
+            let id = req.query.id;
+
+            // obter dados de usuários
+            let post = await database.getPostById(id);
+
+            // exibir página da postagem
+            res.render('ejs/post.ejs', { data, post, token });
+
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     publish: async (req, res, next) => {
 
         try {

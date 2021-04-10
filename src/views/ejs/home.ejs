@@ -41,7 +41,7 @@
                     <% posts.map((post, index)=> { %>
                         <div class="card mb-3">
                             <div class="card-header">
-                                <%= post.date %>
+                                <a href="/post?id=<%= post.id %>&token=<%= token %>"><%= post.date %></a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">

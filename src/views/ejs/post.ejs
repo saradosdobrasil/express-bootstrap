@@ -1,0 +1,33 @@
+<%- include("./partials/top-home") -%>
+    <%- include("./partials/nav") -%>
+
+        <main class="container-fluid flex-fill">
+            <div class="row p-3">
+                <div class="col py-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="/post?id=<%= post.id %>&token=<%= token %>">
+                                <%= post.date %>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= post.title %>
+                            </h5>
+
+                            <%if (post.video) { %>
+                                <div class="my-4 iframe">
+                                    <iframe class="responsive-iframe" src="<%= post.video %>" frameborder="0"
+                                        allowfullscreen></iframe>
+                                </div>
+                            <% } %>
+
+                            <div class="card-text post"><%= post.text %></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include("./partials/footer-home") -%>

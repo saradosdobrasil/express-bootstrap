@@ -12,6 +12,7 @@ router.get('/admins', middlewares.authentication, controllers.get.admins);
 router.get('/api*', middlewares.authorization); // obter acesso a api
 router.get('/login', middlewares.authentication, controllers.get.login);
 router.get('/manageposts', middlewares.authentication, controllers.get.manageposts);
+router.get('/post', middlewares.authentication, controllers.get.post);
 router.get('/publish', middlewares.authentication, controllers.get.publish);
 router.get('/signup', controllers.get.signup);
 router.get('/updatepost', middlewares.authentication, controllers.get.updatepost);

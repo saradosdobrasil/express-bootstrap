@@ -40,11 +40,17 @@
                                                 <i class="bi bi-trash"></i>
                                             </button>
 
-                                            <button type="submit" formaction="updatepost?token=<%= token %>" formmethod='POST'
-                                                class="btn btn-primary mx-1" id="<%= post.id %>" name="id"
-                                                value="<%= post.id %>">
+                                            <button type="submit" formaction="updatepost?token=<%= token %>"
+                                                formmethod='POST' class="btn btn-primary mx-1" id="<%= post.id %>"
+                                                name="id" value="<%= post.id %>">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
+
+                                            <a href="/post?id=<%= post.id %>&token=<%= token %>" target="_blank" class="btn btn-success"
+                                                role="button" aria-pressed="true">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+
                                         </td>
                                     </tr>
                                     <% }) %>
