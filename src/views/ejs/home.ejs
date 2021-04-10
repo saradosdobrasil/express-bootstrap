@@ -1,7 +1,7 @@
 <%- include("./partials/top-home") -%>
     <%- include("./partials/nav") -%>
 
-        <main class="container-fluid h-100">
+        <main class="container-fluid flex-fill">
             <div class="row p-3">
 
                 <div class="col-4">
@@ -38,7 +38,6 @@
                         Últimas Postagens
                     </h4>
 
-
                     <% posts.map((post, index)=> { %>
                         <div class="card mb-3">
                             <div class="card-header">
@@ -48,14 +47,19 @@
                                 <h5 class="card-title">
                                     <%= post.title %>
                                 </h5>
-                                <p class="card-text">
-                                    <%= post.text %>
-                                </p>
+
+                                <%if (post.video) { %>
+                                    <div class="my-4 iframe">
+                                        <iframe class="responsive-iframe" src="<%= post.video %>" frameborder="0"
+                                            allowfullscreen></iframe>
+                                    </div>
+                                <% } %>
+
+                                <div class="card-text post"><%= post.text %></div>
+
                             </div>
                         </div>
                         <% }) %>
-
-
                 </div>
             </div>
         </main>

@@ -230,8 +230,13 @@ const post = {
             let obj = {};
             obj.id = '';
             obj.title = req.body.title;
+            obj.video = req.body.video;
             obj.text = req.body.text;
             obj.date = req.body.date;
+
+            // extrair url do código embutido do vídeo
+            obj.video = obj.video.split('src="')[1];
+            obj.video = obj.video.split('"')[0];
 
             // ajustar data para padrão dd/mm/yyyy
             let newDate = obj.date.split('-');
@@ -337,6 +342,7 @@ const put = {
             let obj = {};
             obj.id = req.query.id; // id da url
             obj.title = req.body.title;
+            obj.video = req.body.video;
             obj.text = req.body.text;
             obj.date = req.body.date;
 
