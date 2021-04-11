@@ -116,6 +116,19 @@ const get = {
             let previous = await database.getPreviousPostById(id);
             let next = await database.getNextPostById(id);
 
+            // extrair url do vídeo incorporado
+            if (post.video !== "") {
+                // procurar string 'src' no campo
+                let hasSource = post.video.search('src=');
+                if (hasSource !== -1) {
+                    // extrair url do código embutido do vídeo
+                    post.video = post.video.split('src="')[1];
+                    post.video = post.video.split('"')[0];
+                } else {
+                    post.video = '';
+                }
+            }
+
             // exibir página da postagem
             res.render('ejs/post.ejs', { data, post, previous, next, token });
 
@@ -266,18 +279,6 @@ const post = {
             obj.video = req.body.video;
             obj.text = req.body.text;
             obj.date = req.body.date;
-
-            if (obj.video !== "") {
-                // procurar string 'src' no campo
-                let hasSource = obj.video.search('src=');
-                if (hasSource !== -1) {
-                    // extrair url do código embutido do vídeo
-                    obj.video = obj.video.split('src="')[1];
-                    obj.video = obj.video.split('"')[0];
-                } else {
-                    obj.video = '';
-                }
-            }
 
             // ajustar data para padrão dd/mm/yyyy
             let newDate = obj.date.split('-');

@@ -4,8 +4,7 @@
         <main class="container-fluid flex-fill">
             <div class="row p-3">
 
-                <div class="col-4">
-
+                <div class="col-3">
                     <div class="card my-4">
                         <div class="card-body">
                             <h2 class="card-title">
@@ -29,29 +28,39 @@
                             <a href="#" class="card-link">Another link</a>
                         </div>
                     </div>
-
                 </div>
 
-                <div class="col-8 py-4">
-                    <div class="card-columns">
+                <div class="col-6 py-4">
                     <% posts.map((post, index)=> { %>
                         <div class="card mb-3">
                             <div class="card-header">
-                                <a class="text-decoration-none" href="/post?id=<%= post.id %>&token=<%= token %>"><%= post.date %></a>
+                                <a class="text-decoration-none" href="/post?id=<%= post.id %>&token=<%= token %>">
+                                    <%= post.date %>
+                                </a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <%= post.title %>
                                 </h5>
-
-                                <div class="card-text"><%= post.text %></div>
-
+                                <div class="card-text">
+                                    <%= post.text %>
+                                </div>
                             </div>
                             <div class="card-footer">
-                                2 days ago
+                                <a class="text-decoration-none float-right"
+                                    href="/post?id=<%= post.id %>&token=<%= token %>">
+                                    Leia Mais
+                                </a>
                             </div>
                         </div>
-                    <% }) %>
+                        <% }) %>
+                </div>
+
+                <div class="col-3 py-4">
+                    <div class="card">
+                        <div class="card-body">
+                            This is some text within a card body.
+                        </div>
                     </div>
                 </div>
             </div>
