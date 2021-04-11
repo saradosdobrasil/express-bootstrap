@@ -42,6 +42,8 @@ let vue = new Vue({
     },
 
     mounted() {
+
+        $('.carousel').carousel();
     }
 
 });

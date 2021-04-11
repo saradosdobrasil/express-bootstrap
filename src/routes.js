@@ -10,7 +10,8 @@ let middlewares = require('./controllers/middlewares');
 router.get('/', controllers.get.index);
 router.get('/admins', middlewares.authentication, controllers.get.admins);
 router.get('/api*', middlewares.authorization); // obter acesso a api
-router.get('/login', middlewares.authentication, controllers.get.login);
+router.get('/login', controllers.get.login);
+router.get('/authentication', middlewares.authentication, controllers.get.authentication);
 router.get('/manageposts', middlewares.authentication, controllers.get.manageposts);
 router.get('/post', middlewares.authentication, controllers.get.post);
 router.get('/publish', middlewares.authentication, controllers.get.publish);
@@ -21,7 +22,7 @@ router.get('/users', middlewares.authentication, controllers.get.users);
 // POST
 router.post('/deleteuser', controllers.del.deleteuser);
 router.post('/deletepost', controllers.del.deletepost);
-router.post('/login', controllers.post.login); // obter token de acesso
+router.post('/authentication', controllers.post.authentication); // obter token de acesso
 router.post('/publish', controllers.post.publish);
 router.post('/saveeditions', controllers.put.saveeditions);
 router.post('/signup', controllers.post.signup);

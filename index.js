@@ -13,8 +13,8 @@ const views = path.join(__dirname, 'src/views');
 
 // JSON Server
 const jsonServer = require('json-server');
-const db = path.join(__dirname, '/db/db.json');
-const routerDataBase = jsonServer.router(db);
+const privateDataBase = path.join(__dirname, '/db/private.json');
+const routerDataBase = jsonServer.router(privateDataBase);
 const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
 
 // * ----- CONFIGURAÇÕES ----- *

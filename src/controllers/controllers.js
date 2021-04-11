@@ -30,11 +30,15 @@ const get = {
         }
     },
 
+    login: (req, res, next) => {
+        res.render('ejs/login.ejs', { alert: 'login' });
+    },
+
     index: (req, res, next) => {
         res.render('ejs/index.ejs', { alert: 'login' });
     },
 
-    login: async (req, res, next) => {
+    authentication: async (req, res, next) => {
 
         try {
 
@@ -225,7 +229,7 @@ const get = {
 const post = {
 
     // criação do token de acesso
-    login: async (req, res, next) => {
+    authentication: async (req, res, next) => {
 
         try {
 
@@ -255,7 +259,7 @@ const post = {
                 const token = jwt.sign({ name, email, role }, req.app.get('superSecret'), { expiresIn: '1h' });
 
                 // redirecionar à rota de autenticação
-                res.redirect(`/login?token=` + token);
+                res.redirect(`/authentication?token=` + token);
 
             }
 
