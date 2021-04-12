@@ -344,7 +344,7 @@ const post = {
                     await database.saveUser(newUser);
 
                     // redirecionar à pagina de login
-                    res.redirect('/');
+                    res.redirect('/login');
                 }
 
         } catch (error) {
