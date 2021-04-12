@@ -13,8 +13,10 @@ const views = path.join(__dirname, 'src/views');
 
 // JSON Server
 const jsonServer = require('json-server');
+const publicDataBase = path.join(__dirname, '/db/public.json');
+const routerPublicDataBase = jsonServer.router(publicDataBase);
 const privateDataBase = path.join(__dirname, '/db/private.json');
-const routerDataBase = jsonServer.router(privateDataBase);
+const routerPrivateDataBase = jsonServer.router(privateDataBase);
 const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
 
 // * ----- CONFIGURAÇÕES ----- *
@@ -48,8 +50,11 @@ app.use(router);
 // usar middlewares do JSON Server
 app.use(jsonServerMiddlewares);
 
-// [1] montar rotas de posts do JSON Server no endpoint /api
-app.use('/api', routerDataBase);
+// [1] montar rotas públicas do JSON Server no endpoint /public
+app.use('/public', routerPublicDataBase);
+
+// montar rotas privadas do JSON Server no endpoint /private
+app.use('/private', routerPrivateDataBase);
 
 // ativar CORS
 app.use(cors());

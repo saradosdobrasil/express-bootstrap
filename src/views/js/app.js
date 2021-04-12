@@ -2,7 +2,7 @@ let vue = new Vue({
     el: '#app',
 
     data: {
-        api: `${window.location.href}api`,
+        public: `${window.location.href}public`,
         forms: {
             login: {
                 email: '',

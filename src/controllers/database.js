@@ -2,7 +2,7 @@
 
 const axios = require('axios');
 const settings = require('../../settings');
-const location_href = `${settings.location.host}3000/api`;
+const location_href = `${settings.location.host}3000/private`;
 const headers = { 'Content-Type': 'application/json' };
 const apikey = `apikey=${process.env.APIKEY}`;
 

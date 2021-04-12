@@ -30,25 +30,4 @@ module.exports = {
             }
         });
     },
-
-    // proteger acesso a api com senha
-    authorization: (req, res, next) => {
-
-        let apikey = req.query.apikey;
-
-        // se houver parâmetro query na url
-        if (apikey !== undefined) {
-
-            // se valor do parâmetro for igual a chave da API
-            if (apikey === process.env.APIKEY) {
-
-                // conceder acesso à api
-                next();
-            }
-
-        } else {
-            // voltar à pagina de login
-            res.redirect('/');
-        }
-    }
 }

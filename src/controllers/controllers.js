@@ -243,7 +243,7 @@ const post = {
             if (searchUser.length === 0) {
 
                 // exibir página usuário não cadastrado
-                res.render('ejs/index.ejs', { alert: 'user not found' });
+                res.render('ejs/login.ejs', { alert: 'user not found' });
             }
 
             // se usuário existe

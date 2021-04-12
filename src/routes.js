@@ -9,7 +9,6 @@ let middlewares = require('./controllers/middlewares');
 
 router.get('/', controllers.get.index);
 router.get('/admins', middlewares.authentication, controllers.get.admins);
-router.get('/api*', middlewares.authorization); // obter acesso a api
 router.get('/login', controllers.get.login);
 router.get('/authentication', middlewares.authentication, controllers.get.authentication);
 router.get('/manageposts', middlewares.authentication, controllers.get.manageposts);
