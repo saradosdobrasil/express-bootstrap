@@ -2,7 +2,7 @@
 
 const axios = require('axios');
 const settings = require('../../settings');
-const location_href = `${settings.location.host}3000/private`;
+const private_url = `${settings.location.host}3000/private`;
 const headers = { 'Content-Type': 'application/json' };
 const apikey = `apikey=${process.env.APIKEY}`;
 
@@ -12,7 +12,7 @@ module.exports = {
 
         try {
 
-            await axios.delete(`${location_href}/posts/${id}?${apikey}`);
+            await axios.delete(`${private_url}/posts/${id}?${apikey}`);
 
         } catch (error) {
             console.log(error.message);
@@ -24,7 +24,7 @@ module.exports = {
 
         try {
 
-            await axios.delete(`${location_href}/users/${id}?${apikey}`);
+            await axios.delete(`${private_url}/users/${id}?${apikey}`);
 
         } catch (error) {
             console.log(error.message);
@@ -36,7 +36,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&role=admin&${apikey}`);
+            let response = await axios.get(`${private_url}/users?_sort=id&_order=desc&role=admin&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -49,7 +49,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&_limit=1&${apikey}`);
+            let response = await axios.get(`${private_url}/users?_sort=id&_order=desc&_limit=1&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -62,7 +62,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/posts?_sort=id&_order=desc&_limit=1&${apikey}`);
+            let response = await axios.get(`${private_url}/posts?_sort=id&_order=desc&_limit=1&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -76,7 +76,7 @@ module.exports = {
         try {
 
             id = Number(id) + 1;
-            let response = await axios.get(`${location_href}/posts/${id}?${apikey}`);
+            let response = await axios.get(`${private_url}/posts/${id}?${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -89,7 +89,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/posts/${id}?${apikey}`);
+            let response = await axios.get(`${private_url}/posts/${id}?${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -103,7 +103,7 @@ module.exports = {
         try {
 
             id = Number(id) - 1;
-            let response = await axios.get(`${location_href}/posts/${id}?${apikey}`);
+            let response = await axios.get(`${private_url}/posts/${id}?${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -116,7 +116,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/posts?_sort=id&_order=desc&${apikey}`);
+            let response = await axios.get(`${private_url}/posts?_sort=id&_order=desc&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -129,7 +129,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/users/${id}?${apikey}`);
+            let response = await axios.get(`${private_url}/users/${id}?${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -142,7 +142,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${location_href}/users?_sort=id&_order=desc&role=user&${apikey}`);
+            let response = await axios.get(`${private_url}/users?_sort=id&_order=desc&role=user&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -155,7 +155,7 @@ module.exports = {
         try {
 
             let params = obj;
-            return await axios.put(`${location_href}/posts/${obj.id}?${apikey}`, params, { headers: headers });
+            return await axios.put(`${private_url}/posts/${obj.id}?${apikey}`, params, { headers: headers });
 
 
         } catch (error) {
@@ -168,7 +168,7 @@ module.exports = {
         try {
 
             let params = obj;
-            return await axios.post(`${location_href}/posts?${apikey}`, params, { headers: headers });
+            return await axios.post(`${private_url}/posts?${apikey}`, params, { headers: headers });
 
         } catch (error) {
             console.log(error.message);
@@ -181,7 +181,7 @@ module.exports = {
         try {
 
             let params = obj;
-            return await axios.post(`${location_href}/users?${apikey}`, params, { headers: headers });
+            return await axios.post(`${private_url}/users?${apikey}`, params, { headers: headers });
 
         } catch (error) {
             console.log(error.message);
@@ -192,7 +192,7 @@ module.exports = {
     searchEmail: async (email) => {
         try {
 
-            let response = await axios.get(`${location_href}/users?email=${email}&${apikey}`);
+            let response = await axios.get(`${private_url}/users?email=${email}&${apikey}`);
             return response.data;
 
         } catch (error) {
@@ -203,7 +203,7 @@ module.exports = {
     searchUser: async (email, password) => {
         try {
 
-            let response = await axios.get(`${location_href}/users?email=${email}&password=${password}&${apikey}`);
+            let response = await axios.get(`${private_url}/users?email=${email}&password=${password}&${apikey}`);
             return response.data;
 
         } catch (error) {

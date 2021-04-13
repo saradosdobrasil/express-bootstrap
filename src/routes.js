@@ -13,6 +13,8 @@ router.get('/login', controllers.get.login);
 router.get('/authentication', middlewares.authentication, controllers.get.authentication);
 router.get('/manageposts', middlewares.authentication, controllers.get.manageposts);
 router.get('/post', middlewares.authentication, controllers.get.post);
+router.get('/private*', middlewares.authorization); // obter acesso aos dados privados
+router.get('/public*', middlewares.authorization); // obter acesso aos dados públicos
 router.get('/publish', middlewares.authentication, controllers.get.publish);
 router.get('/signup', controllers.get.signup);
 router.get('/updatepost', middlewares.authentication, controllers.get.updatepost);

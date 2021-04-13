@@ -2,7 +2,8 @@
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const database = require('./database');
+const public_db = require('./public_db');
+const private_db = require('./private_db');
 
 // GET
 const get = {
@@ -19,7 +20,7 @@ const get = {
             if (data.role === 'admin') {
 
                 // obter dados de posts
-                let admins = await database.getAdmins();
+                let admins = await private_db.getAdmins();
 
                 // exibir página de usuários e passar dados 
                 res.render('ejs/admins.ejs', { data, admins, token });
@@ -34,8 +35,18 @@ const get = {
         res.render('ejs/login.ejs', { alert: 'login' });
     },
 
-    index: (req, res, next) => {
-        res.render('ejs/index.ejs', { alert: 'login' });
+    index: async (req, res, next) => {
+        
+        try {
+
+            let carousel = await public_db.getDataOfCarousel();
+            let cards = await public_db.getDataOfCards();
+            
+            res.render('ejs/index.ejs', { alert: 'login', carousel, cards });
+
+        } catch (error) {
+            console.log(error.message);
+        }
     },
 
     authentication: async (req, res, next) => {
@@ -50,7 +61,7 @@ const get = {
             if (data.role === 'admin') {
 
                 // obter dados de usuários
-                let users = await database.getUsers();
+                let users = await private_db.getUsers();
 
                 // exibir página de admin e passar dados 
                 res.render('ejs/home-admin.ejs', { data, users, token });
@@ -60,7 +71,7 @@ const get = {
             if (data.role === 'user') {
 
                 // obter dados de posts
-                let posts = await database.getPosts();
+                let posts = await private_db.getPosts();
 
                 // criar resumo dos textos
                 let length = 100;
@@ -92,7 +103,7 @@ const get = {
             if (data.role === 'admin') {
 
                 // obter dados de usuários
-                let posts = await database.getPosts();
+                let posts = await private_db.getPosts();
 
                 // exibir página e passar dados 
                 res.render('ejs/manage-posts.ejs', { data, posts, token });
@@ -116,9 +127,9 @@ const get = {
             let id = req.query.id;
 
             // obter dados de usuários
-            let post = await database.getPostById(id);
-            let previous = await database.getPreviousPostById(id);
-            let next = await database.getNextPostById(id);
+            let post = await private_db.getPostById(id);
+            let previous = await private_db.getPreviousPostById(id);
+            let next = await private_db.getNextPostById(id);
 
             // extrair url do vídeo incorporado
             if (post.video !== "") {
@@ -184,7 +195,7 @@ const get = {
             if (data.role === 'admin') {
 
                 // obter dados do post
-                let post = await database.getPostById(id);
+                let post = await private_db.getPostById(id);
 
                 // ajustar data de dd/mm/yyyy para o padrão yyyy-mm-dd
                 let resetDate = post.date.split('/');
@@ -212,7 +223,7 @@ const get = {
             if (data.role === 'admin') {
 
                 // obter dados de posts
-                let users = await database.getUsers();
+                let users = await private_db.getUsers();
 
                 // exibir página de usuários e passar dados 
                 res.render('ejs/users.ejs', { data, users, token });
@@ -237,7 +248,7 @@ const post = {
             let password = req.body.password;
 
             // verificar se usuário existe no banco a partir dos dados informados
-            let searchUser = await database.searchUser(email, password);
+            let searchUser = await private_db.searchUser(email, password);
 
             // se usuário não existe
             if (searchUser.length === 0) {
@@ -290,7 +301,7 @@ const post = {
             obj.date = newDate;
 
             // obter id do último post
-            let lastPost = await database.getLastPost();
+            let lastPost = await private_db.getLastPost();
 
             if (lastPost.length === 0) {
                 obj.id = 1;
@@ -299,7 +310,7 @@ const post = {
             }
 
             // salvar post
-            await database.savePost(obj);
+            await private_db.savePost(obj);
 
             // redirecionar a pagina de login
             res.redirect('/login?token=' + token);
@@ -320,7 +331,7 @@ const post = {
             let password = req.body.password;
 
             // verificar se existe conta de email cadastrada
-            let searchEmail = await database.searchEmail(email);
+            let searchEmail = await private_db.searchEmail(email);
 
             // se existe conta de email cadastrada
             if (searchEmail.length > 0) {
@@ -333,7 +344,7 @@ const post = {
                 if (searchEmail.length === 0) {
 
                     // obter dados do último usuário cadastrado (por id)
-                    let users = await database.getLastUser();
+                    let users = await private_db.getLastUser();
                     let lastId = users[0].id;
                     let newId = lastId + 1;
 
@@ -341,7 +352,7 @@ const post = {
                     let newUser = new User(newId, name, password, email);
 
                     // salvar novo usuário no banco
-                    await database.saveUser(newUser);
+                    await private_db.saveUser(newUser);
 
                     // redirecionar à pagina de login
                     res.redirect('/login');
@@ -398,7 +409,7 @@ const put = {
             obj.date = newDate;
 
             // atualizar post
-            await database.saveEditions(obj);
+            await private_db.saveEditions(obj);
 
             // redirecionar a pagina de login
             res.redirect('/login?token=' + token);
@@ -420,7 +431,7 @@ const del = {
             let id = req.body.id;
 
             // deletar usuário pelo id
-            await database.deleteUser(id);
+            await private_db.deleteUser(id);
 
             // recarregar a página
             res.redirect('back');
@@ -437,7 +448,7 @@ const del = {
             let id = req.body.id;
 
             // deletar usuário pelo id
-            await database.deletePost(id);
+            await private_db.deletePost(id);
 
             // recarregar a página
             res.redirect('back');
