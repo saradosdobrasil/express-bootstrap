@@ -8,6 +8,29 @@ const private_db = require('./private_db');
 // GET
 const get = {
 
+    addtocarousel: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // se usuário é admin
+            if (data.role === 'admin') {
+
+                // obter dados de posts
+                let images = await public_db.getListOfImages();
+
+                // exibir página do carousel
+                res.render('ejs/add-to-carousel.ejs', { data, images, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     admins: async (req, res, next) => {
 
         try {
@@ -31,17 +54,40 @@ const get = {
         }
     },
 
+    managecarousel: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // se usuário é admin
+            if (data.role === 'admin') {
+
+                // obter dados de posts
+                let carousel = await public_db.getDataOfCarousel();
+
+                // exibir página do carousel
+                res.render('ejs/manage-carousel.ejs', { carousel, data, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     login: (req, res, next) => {
         res.render('ejs/login.ejs', { alert: 'login' });
     },
 
     index: async (req, res, next) => {
-        
+
         try {
 
             let carousel = await public_db.getDataOfCarousel();
             let cards = await public_db.getDataOfCards();
-            
+
             res.render('ejs/index.ejs', { alert: 'login', carousel, cards });
 
         } catch (error) {
@@ -180,6 +226,35 @@ const get = {
         res.render('ejs/signup.ejs');
     },
 
+    updatecarousel: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // recuperar id de usuário
+            let id = req.query.id;
+
+            // se usuário é admin
+            if (data.role === 'admin') {
+
+                // obter dados do slide
+                let slide = await public_db.getSlideOfCarouselById(id);
+
+                // obter dados das imagens do carousel
+                let images = await public_db.getListOfImages();
+
+                // exibir página de edição do slide
+                res.render('ejs/update-carousel.ejs', { data, id, slide, images, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     updatepost: async (req, res, next) => {
 
         try {
@@ -238,6 +313,29 @@ const get = {
 
 // POST
 const post = {
+
+
+    addtocarousel: async (req, res, next) => {
+
+        try {
+
+            // recuperar token passado na url
+            let token = req.query.token;
+
+            // obter objeto do corpo do formulário
+            let obj = req.body;
+
+            // salvar no banco publico
+            await public_db.saveToCarousel(obj);
+
+            // redirecionar a pagina de autenticação
+            res.redirect('/managecarousel?token=' + token);
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
 
     // criação do token de acesso
     authentication: async (req, res, next) => {
@@ -312,8 +410,8 @@ const post = {
             // salvar post
             await private_db.savePost(obj);
 
-            // redirecionar a pagina de login
-            res.redirect('/login?token=' + token);
+            // redirecionar a pagina de autenticação
+            res.redirect('/authentication?token=' + token);
 
         } catch (error) {
             console.log(error.message);
@@ -357,6 +455,25 @@ const post = {
                     // redirecionar à pagina de login
                     res.redirect('/login');
                 }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+    updatecarousel: async (req, res, next) => {
+
+        try {
+
+            // obter token da url
+            let token = req.query.token;
+
+            // obter id do formulário
+            let id = req.body.id;
+
+            // carregar página da postagem
+            res.redirect(`/updatecarousel?token=${token}&id=${id}`);
 
         } catch (error) {
             console.log(error.message);
@@ -420,9 +537,54 @@ const put = {
 
     },
 
+    updateslide: async (req, res, next) => {
+
+        try {
+
+            // recuperar token passado na url
+            let token = req.query.token;
+
+            // recuper id do slide
+            let id = req.query.id;
+
+            // criar objeto com dados enviados pelo formulário
+            let obj = req.body;
+
+            // adicionar o id ao objeto
+            obj.id = id;
+
+            // atualizar post
+            await public_db.updateSlide(obj);
+
+            // redirecionar a pagina de autenticação
+            res.redirect('/managecarousel?token=' + token);
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
 }
 // DELETE
 const del = {
+
+    deleteofcarousel: async (req, res, next) => {
+
+        try {
+
+            let id = req.body.id;
+
+            // deletar slide do carousel
+            await public_db.deleteSlideOfCarousel(id);
+
+            // recarregar a página
+            res.redirect('back');
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
 
     deleteuser: async (req, res, next) => {
 

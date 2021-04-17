@@ -1,0 +1,79 @@
+<%- include("./partials/top-admin") -%>
+
+    <main class="container-fluid flex-fill">
+        <div class="row p-3">
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="py-4">
+                            <i class="bi bi-pencil-square"></i>
+                            Adicionar Imagem ao Carousel
+                        </h4>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-outline-dark float-right" href="/managecarousel?token=<%= token %>"
+                            role="button">
+                            Editar Carousel
+                        </a>
+                        <a class="btn btn-outline-dark float-right mr-2" href="/authentication?token=<%= token %>"
+                            role="button">
+                            Voltar
+                        </a>
+                    </div>
+                </div>
+
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="title">Título</label>
+                                <input type="title" class="form-control" id="title" name="title"
+                                    value="<%- slide.title -%>" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="title">Url</label>
+                                <input type="text" class="form-control" id="url" name="url" value="<%- slide.url -%>"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="form-group">
+                                <label for="select">Imagem</label>
+                                <select class="form-control" id="image" name="image" required>
+                                    <% images.map((image, index)=> { %>
+
+                                        <%if (image===slide.image) { %>
+                                            <option selected>
+                                                <%= image %>
+                                            </option>
+                                        <% } else { %>
+                                            <option>
+                                                <%= image %>
+                                            </option>
+                                        <% } %>
+                                        
+                                    <% }) %>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="textarea">Descrição</label>
+                                <textarea class="form-control" id="description" name="description" rows="5"
+                                    required><%- slide.description -%></textarea>
+                            </div>
+
+                            <button type="submit" formaction='updateslide?token=<%- token -%>&id=<%- id -%>' formmethod='POST'
+                                class="btn btn-success float-right">Atualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include("./partials/footer-admin") -%>

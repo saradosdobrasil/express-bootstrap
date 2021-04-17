@@ -9,6 +9,8 @@ let middlewares = require('./controllers/middlewares');
 
 router.get('/', controllers.get.index);
 router.get('/admins', middlewares.authentication, controllers.get.admins);
+router.get('/addtocarousel', middlewares.authentication, controllers.get.addtocarousel);
+router.get('/managecarousel', middlewares.authentication, controllers.get.managecarousel);
 router.get('/login', controllers.get.login);
 router.get('/authentication', middlewares.authentication, controllers.get.authentication);
 router.get('/manageposts', middlewares.authentication, controllers.get.manageposts);
@@ -17,16 +19,21 @@ router.get('/private*', middlewares.authorization); // obter acesso aos dados pr
 router.get('/public*', middlewares.authorization); // obter acesso aos dados públicos
 router.get('/publish', middlewares.authentication, controllers.get.publish);
 router.get('/signup', controllers.get.signup);
+router.get('/updatecarousel', middlewares.authentication, controllers.get.updatecarousel);
 router.get('/updatepost', middlewares.authentication, controllers.get.updatepost);
 router.get('/users', middlewares.authentication, controllers.get.users);
 
 // POST
+router.post('/addtocarousel', controllers.post.addtocarousel);
+router.post('/authentication', controllers.post.authentication); // obter token de acesso
+router.post('/deleteofcarousel', controllers.del.deleteofcarousel);
 router.post('/deleteuser', controllers.del.deleteuser);
 router.post('/deletepost', controllers.del.deletepost);
-router.post('/authentication', controllers.post.authentication); // obter token de acesso
 router.post('/publish', controllers.post.publish);
 router.post('/saveeditions', controllers.put.saveeditions);
 router.post('/signup', controllers.post.signup);
+router.post('/updatecarousel', controllers.post.updatecarousel);
 router.post('/updatepost', controllers.post.updatepost);
+router.post('/updateslide', controllers.put.updateslide);
 
 module.exports = router;

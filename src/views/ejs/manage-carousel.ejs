@@ -1,19 +1,21 @@
 <%- include("./partials/top-admin") -%>
 
     <main class="container-fluid flex-fill">
+
         <div class="row p-3">
+
             <div class="col">
 
                 <div class="row align-items-center">
                     <div class="col">
                         <h4 class="py-4">
-                            <i class="bi bi-people-fill"></i>
-                            Lista de Administradores
+                            <i class="bi bi-file-earmark"></i>
+                            Gerenciar Carousel
                         </h4>
                     </div>
                     <div class="col">
-                        <a class="btn btn-outline-dark float-right" href="/users?token=<%= token %>" role="button">
-                            Lista de Usuários
+                        <a class="btn btn-outline-dark float-right" href="/addtocarousel?token=<%= token %>" role="button">
+                            Adicionar Imagem ao Carousel
                         </a>
                         <a class="btn btn-outline-dark float-right mr-2" href="/authentication?token=<%= token %>" role="button">
                             Voltar
@@ -21,42 +23,49 @@
                     </div>
                 </div>
 
-
-                <form action='deleteuser' method='POST'>
+                <form>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead class="thead-light">
                                 <tr class="text-center">
                                     <th scope="col">Id</th>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Senha</th>
-                                    <th scope="col">E-mail</th>
-                                    <th scope="col">Acesso</th>
+                                    <th scope="col">Título</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Imagem</th>
+                                    <th scope="col">Url</th>
                                     <th scope="col">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% admins.map((admin, index)=> { %>
+                                <% carousel.map((slide, index)=> { %>
                                     <tr class="text-center">
                                         <td class="align-middle">
-                                            <%= admin.id %>
+                                            <%= slide.id %>
                                         </td>
                                         <td class="align-middle">
-                                            <%= admin.name %>
+                                            <%= slide.title %>
                                         </td>
                                         <td class="align-middle">
-                                            <%= admin.password %>
+                                            <%= slide.description %>
+                                        </td>
+                                        <td class="align-middle w-50">
+                                            <img src="<%= slide.image %>" alt="Slide image" class="img-thumbnail w-25">
+                                            <%= slide.image %>
                                         </td>
                                         <td class="align-middle">
-                                            <%= admin.email %>
+                                            <%= slide.url %>
                                         </td>
                                         <td class="align-middle">
-                                            <%= admin.role %>
-                                        </td>
-                                        <td class="align-middle">
-                                            <button type="submit" class="btn btn-danger" id="<%= admin.id %>" name="id"
-                                                value="<%= admin.id %>">
+                                            <button title="Deletar slide" type="submit" formaction="deleteofcarousel" formmethod='POST'
+                                                class="btn btn-danger mx-1" id="<%= slide.id %>" name="id"
+                                                value="<%= slide.id %>">
                                                 <i class="bi bi-trash"></i>
+                                            </button>
+
+                                            <button title="Editar slide" type="submit" formaction="updatecarousel?token=<%= token %>"
+                                                formmethod='POST' class="btn btn-primary mx-1" id="<%= slide.id %>"
+                                                name="id" value="<%= slide.id %>">
+                                                <i class="bi bi-pencil"></i>
                                             </button>
                                         </td>
                                     </tr>
