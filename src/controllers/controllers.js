@@ -151,6 +151,14 @@ const get = {
                 // obter dados de usuários
                 let posts = await private_db.getPosts();
 
+                // ajustar data para padrão dd/mm/yyyy
+                let newDate;
+                posts.map(post => {
+                    newDate = post.date.split('-');
+                    newDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
+                    post.date = newDate;
+                });
+
                 // exibir página e passar dados 
                 res.render('ejs/manage-posts.ejs', { data, posts, token });
             }
@@ -272,11 +280,6 @@ const get = {
                 // obter dados do post
                 let post = await private_db.getPostById(id);
 
-                // ajustar data de dd/mm/yyyy para o padrão yyyy-mm-dd
-                let resetDate = post.date.split('/');
-                resetDate = `${resetDate[2]}-${resetDate[1]}-${resetDate[0]}`;
-                post.date = resetDate;
-
                 // exibir página de usuários e passar dados 
                 res.render('ejs/update-post.ejs', { data, id, post, token });
             }
@@ -385,33 +388,14 @@ const post = {
             // recuperar token passado na url
             let token = req.query.token;
 
-            // criar objeto com dados enviados pelo formulário
-            let obj = {};
-            obj.id = '';
-            obj.title = req.body.title;
-            obj.video = req.body.video;
-            obj.text = req.body.text;
-            obj.date = req.body.date;
-
-            // ajustar data para padrão dd/mm/yyyy
-            let newDate = obj.date.split('-');
-            newDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
-            obj.date = newDate;
-
-            // obter id do último post
-            let lastPost = await private_db.getLastPost();
-
-            if (lastPost.length === 0) {
-                obj.id = 1;
-            } else {
-                obj.id = lastPost[0].id + 1;
-            }
+            // obter dados enviados pelo formulário
+            let obj = req.body;
 
             // salvar post
             await private_db.savePost(obj);
 
-            // redirecionar a pagina de autenticação
-            res.redirect('/authentication?token=' + token);
+            // redirecionar a pagina de gerenciar postagens
+            res.redirect('/manageposts?token=' + token);
 
         } catch (error) {
             console.log(error.message);
@@ -512,24 +496,20 @@ const put = {
             // recuperar token passado na url
             let token = req.query.token;
 
-            // criar objeto com dados enviados pelo formulário
-            let obj = {};
-            obj.id = req.query.id; // id da url
-            obj.title = req.body.title;
-            obj.video = req.body.video;
-            obj.text = req.body.text;
-            obj.date = req.body.date;
+            // recuperar id passado na url
+            let id = req.query.id;
 
-            // ajustar data para padrão dd/mm/yyyy
-            let newDate = obj.date.split('-');
-            newDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
-            obj.date = newDate;
+            // obter dados enviados pelo formulário
+            let obj = req.body;
+
+            // adicionar id ao objeto
+            obj.id = id;
 
             // atualizar post
             await private_db.saveEditions(obj);
 
-            // redirecionar a pagina de login
-            res.redirect('/login?token=' + token);
+            // redirecionar a pagina de gerenciar postagens
+            res.redirect('/manageposts?token=' + token);
 
         } catch (error) {
             console.log(error.message);

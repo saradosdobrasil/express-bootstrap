@@ -20,6 +20,13 @@
       "image": "\\images\\carousel\\slide3.jpg",
       "description": "Description 3",
       "id": 3
+    },
+    {
+      "title": "Slide 4",
+      "url": "#",
+      "image": "\\images\\carousel\\slide2.jpg",
+      "description": "Description 4",
+      "id": 4
     }
   ],
   "cards": [
