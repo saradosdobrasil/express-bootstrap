@@ -127,8 +127,11 @@ const get = {
                     }
                 });
 
+                let carousel = await public_db.getDataOfCarousel();
+                let cards = await public_db.getDataOfCards();
+
                 // exibir página de usuário e passar dados 
-                res.render('ejs/home.ejs', { data, posts, token });
+                res.render('ejs/home.ejs', { data, posts, carousel, cards, token });
             }
 
         } catch (error) {
@@ -184,19 +187,6 @@ const get = {
             let post = await private_db.getPostById(id);
             let previous = await private_db.getPreviousPostById(id);
             let next = await private_db.getNextPostById(id);
-
-            // extrair url do vídeo incorporado
-            if (post.video !== "") {
-                // procurar string 'src' no campo
-                let hasSource = post.video.search('src=');
-                if (hasSource !== -1) {
-                    // extrair url do código embutido do vídeo
-                    post.video = post.video.split('src="')[1];
-                    post.video = post.video.split('"')[0];
-                } else {
-                    post.video = '';
-                }
-            }
 
             // exibir página da postagem
             res.render('ejs/post.ejs', { data, post, previous, next, token });

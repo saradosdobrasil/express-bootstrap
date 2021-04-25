@@ -1,9 +1,9 @@
 <%- include("./partials/top-home") -%>
-    <%- include("./partials/nav") -%>
+    <%- include("./partials/nav-home") -%>
 
-        <main class="container-fluid flex-fill">
+        <main class="container flex-fill">
             <div class="row p-3">
-                <div class="col py-4">
+                <article class="col-sm-8 py-4">
                     <div class="card">
                         <div class="card-header">
                             <a class="text-decoration-none" href="/post?id=<%= post.id %>&token=<%= token %>">
@@ -11,9 +11,9 @@
                             </a>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h2 class="card-title">
                                 <%= post.title %>
-                            </h5>
+                            </h2>
 
                             <%if (post.video) { %>
                                 <div class="my-4 iframe">
@@ -27,25 +27,33 @@
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col">
-                                    <%if (previous !== undefined) { %>
-                                        <a class="text-decoration-none" href="/post?id=<%= previous.id %>&token=<%= token %>">
+                                    <%if (previous !==undefined) { %>
+                                        <a class="text-decoration-none"
+                                            href="/post?id=<%= previous.id %>&token=<%= token %>">
                                             <i class="bi bi-chevron-left"></i>
                                             <%= previous.title %>
                                         </a>
-                                    <% } %>
+                                        <% } %>
                                 </div>
                                 <div class="col">
-                                    <%if (next !== undefined) { %>
-                                        <a class="text-decoration-none float-right" href="/post?id=<%= next.id %>&token=<%= token %>">
+                                    <%if (next !==undefined) { %>
+                                        <a class="text-decoration-none float-right"
+                                            href="/post?id=<%= next.id %>&token=<%= token %>">
                                             <%= next.title %>
-                                            <i class="bi bi-chevron-right"></i>
+                                                <i class="bi bi-chevron-right"></i>
                                         </a>
-                                    <% } %>
+                                        <% } %>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </article>
+
+                <aside class="col-sm-4 py-4">
+
+                    <h4>Últimas Postagens</h4>
+
+                </aside>
             </div>
         </main>
 
