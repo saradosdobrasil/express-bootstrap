@@ -4,7 +4,7 @@ const settings = require('../../settings');
 
 class User {
 
-    constructor(id, name, password, email) {
+    constructor({ id, name, password, email }) {
         this.id = id;
         this.name = name;
         this.password = password;

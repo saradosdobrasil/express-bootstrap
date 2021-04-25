@@ -20,27 +20,68 @@
                                     <iframe class="responsive-iframe" src="<%= post.video %>" frameborder="0"
                                         allowfullscreen></iframe>
                                 </div>
-                            <% } %>
+                                <% } %>
 
-                            <div class="card-text post"><%- post.text %></div>
+                                    <!-- não deixar espaços e quebra de linhas -->
+                                    <div class="card-text post"><%- post.text %></div>
+
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer bg-white">
+                            <div class="row">
+                                <div class="col">
+
+                                    <button type="submit" formaction="like?token=<%= token %>" formmethod='POST'
+                                        class="btn btn-link text-dark" id="<%= post.id %>" name="id"
+                                        value="<%= post.id %>">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+
+                                    <a href="" class="text-dark" title="Curtir" role="button" aria-pressed="true"
+                                        type="submit" formaction="like?token=<%= token %>" formmethod='POST'
+                                        id="<%= post.id %>" name="id" value="<%= post.id %>">
+                                        <i class="bi bi-heart icon"></i>
+                                    </a>
+
+                                    <a href="" class="text-dark float-right" title="Favoritar">
+                                        <i class="bi bi-bookmark"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white py-4">
+                            <div class="form-row align-items-center">
+                                <div class="col-auto mr-2">
+                                    <a href="" class="text-dark" title="Comentar">
+                                        <i class="bi bi-chat"></i>
+                                    </a>
+                                </div>
+                                <div class="col mr-2">
+                                    <input type="text" class="form-control" id="comment" aria-describedby="comment"
+                                        placeholder="Escrever comentário...">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-secondary">Postar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer py-4">
                             <div class="row">
                                 <div class="col">
                                     <%if (previous !==undefined) { %>
                                         <a class="text-decoration-none"
                                             href="/post?id=<%= previous.id %>&token=<%= token %>">
-                                            <i class="bi bi-chevron-left"></i>
+                                            <i class="bi bi-chevron-left align-middle"></i>
                                             <%= previous.title %>
                                         </a>
                                         <% } %>
                                 </div>
-                                <div class="col">
+                                <div class="col text-right">
                                     <%if (next !==undefined) { %>
-                                        <a class="text-decoration-none float-right"
+                                        <a class="text-decoration-none"
                                             href="/post?id=<%= next.id %>&token=<%= token %>">
                                             <%= next.title %>
-                                                <i class="bi bi-chevron-right"></i>
+                                                <i class="bi bi-chevron-right align-middle"></i>
                                         </a>
                                         <% } %>
                                 </div>

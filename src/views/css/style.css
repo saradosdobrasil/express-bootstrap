@@ -19,6 +19,10 @@ article img {
     height: auto;
 }
 
+article .bi {
+    font-size: 1.5rem;
+}
+
 figure {
     margin: 1rem 1rem 0;
     text-align: center;

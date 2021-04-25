@@ -29,6 +29,7 @@ router.post('/authentication', controllers.post.authentication); // obter token 
 router.post('/deleteofcarousel', controllers.del.deleteofcarousel);
 router.post('/deleteuser', controllers.del.deleteuser);
 router.post('/deletepost', controllers.del.deletepost);
+router.post('/like', controllers.post.like);
 router.post('/publish', controllers.post.publish);
 router.post('/saveeditions', controllers.put.saveeditions);
 router.post('/signup', controllers.post.signup);

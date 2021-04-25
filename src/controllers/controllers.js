@@ -2,6 +2,7 @@
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Post = require('../models/Post');
 const public_db = require('./public_db');
 const private_db = require('./private_db');
 
@@ -371,6 +372,21 @@ const post = {
 
     },
 
+    // curtida em post
+    like: async (req, res, next) => {
+
+        try {
+
+            let id = req.body.id;
+
+
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
     publish: async (req, res, next) => {
 
         try {
@@ -378,11 +394,11 @@ const post = {
             // recuperar token passado na url
             let token = req.query.token;
 
-            // obter dados enviados pelo formulário
-            let obj = req.body;
+            // criar post a partir dos dados enviados pelo formulário
+            let post = new Post(req.body);
 
             // salvar post
-            await private_db.savePost(obj);
+            await private_db.savePost(post);
 
             // redirecionar a pagina de gerenciar postagens
             res.redirect('/manageposts?token=' + token);
@@ -397,10 +413,8 @@ const post = {
 
         try {
 
-            // dados do formulário
-            let name = req.body.name;
+            // obter email do formulário
             let email = req.body.email;
-            let password = req.body.password;
 
             // verificar se existe conta de email cadastrada
             let searchEmail = await private_db.searchEmail(email);
@@ -415,13 +429,8 @@ const post = {
             else
                 if (searchEmail.length === 0) {
 
-                    // obter dados do último usuário cadastrado (por id)
-                    let users = await private_db.getLastUser();
-                    let lastId = users[0].id;
-                    let newId = lastId + 1;
-
-                    // criar novo usuário
-                    let newUser = new User(newId, name, password, email);
+                    // criar novo usuário a partir dos dados do formulário
+                    let newUser = new User(req.body);
 
                     // salvar novo usuário no banco
                     await private_db.saveUser(newUser);
