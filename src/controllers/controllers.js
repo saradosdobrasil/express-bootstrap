@@ -3,6 +3,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Post = require('../models/Post');
+const Like = require('../models/Like');
 const public_db = require('./public_db');
 const private_db = require('./private_db');
 
@@ -55,47 +56,6 @@ const get = {
         }
     },
 
-    managecarousel: async (req, res, next) => {
-
-        try {
-
-            // recuperar dados do usuário autenticado passados no middleware 'authentication'
-            let data = req.data;
-            let token = req.token;
-
-            // se usuário é admin
-            if (data.role === 'admin') {
-
-                // obter dados de posts
-                let carousel = await public_db.getDataOfCarousel();
-
-                // exibir página do carousel
-                res.render('ejs/manage-carousel.ejs', { carousel, data, token });
-            }
-
-        } catch (error) {
-            console.log(error.message);
-        }
-    },
-
-    login: (req, res, next) => {
-        res.render('ejs/login.ejs', { alert: 'login' });
-    },
-
-    index: async (req, res, next) => {
-
-        try {
-
-            let carousel = await public_db.getDataOfCarousel();
-            let cards = await public_db.getDataOfCards();
-
-            res.render('ejs/index.ejs', { alert: 'login', carousel, cards });
-
-        } catch (error) {
-            console.log(error.message);
-        }
-    },
-
     authentication: async (req, res, next) => {
 
         try {
@@ -141,6 +101,100 @@ const get = {
 
     },
 
+    index: async (req, res, next) => {
+
+        try {
+
+            let carousel = await public_db.getDataOfCarousel();
+            let cards = await public_db.getDataOfCards();
+
+            res.render('ejs/index.ejs', { alert: 'login', carousel, cards });
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
+    like: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // recuperar dados do post curtido passados via url
+            let postId = Number(req.query.id);
+            let user = req.query.name;
+            let email = req.query.email;
+
+            // obter dados do post, post anterior e post posterior
+            let post = await private_db.getPostById(postId);
+            let previous = await private_db.getPreviousPostById(postId);
+            let next = await private_db.getNextPostById(postId);
+
+            // se user for admin
+            if (data.role === 'admin') {
+
+                // obter número de likes do post
+                let numberOfLikes = await private_db.getNumberOfLikes(postId);
+
+                // verificar se post já foi curtido pelo usuário
+                let postAlreadyLiked = await private_db.searchLikeOfUser(email, postId);
+
+                // se já foi curtido
+                if (postAlreadyLiked !== undefined) {
+
+                    res.render('ejs/post.ejs', { data, numberOfLikes, token, post, previous, next });
+                }
+                // se não foi curtido
+                else {
+
+                    // criar objeto like
+                    let like = new Like(postId, user, email, generateDate(), generateHour());
+
+                    //salvar like do usuário
+                    await private_db.saveLike(like);
+
+                    // redirecionar para a página de post
+                    // res.redirect(`post?id=${id}&token=${token}`);
+                    res.render('ejs/post.ejs', numberOfLikes)
+
+                }
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
+    login: (req, res, next) => {
+        res.render('ejs/login.ejs', { alert: 'login' });
+    },
+
+    managecarousel: async (req, res, next) => {
+
+        try {
+
+            // recuperar dados do usuário autenticado passados no middleware 'authentication'
+            let data = req.data;
+            let token = req.token;
+
+            // se usuário é admin
+            if (data.role === 'admin') {
+
+                // obter dados de posts
+                let carousel = await public_db.getDataOfCarousel();
+
+                // exibir página do carousel
+                res.render('ejs/manage-carousel.ejs', { carousel, data, token });
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
     manageposts: async (req, res, next) => {
 
         try {
@@ -182,9 +236,9 @@ const get = {
             let token = req.token;
 
             // recuperar id do post
-            let id = req.query.id;
+            let id = Number(req.query.id);
 
-            // obter dados de usuários
+            // obter dados do post, anterior e posterior
             let post = await private_db.getPostById(id);
             let previous = await private_db.getPreviousPostById(id);
             let next = await private_db.getNextPostById(id);
@@ -377,9 +431,18 @@ const post = {
 
         try {
 
-            let id = req.body.id;
+            // recuperar token enviado via url
+            let token = req.query.token;
 
+            // obter id do post via formulário
+            let postId = req.body.id;
 
+            // obter dados do usuário que curtiu o post via url
+            let user = req.query.name;
+            let email = req.query.email;
+
+            // redirecionar para a página like
+            res.redirect(`like?id=${postId}&user=${user}&email=${email}&token=${token}`);
 
         } catch (error) {
             console.log(error.message);
@@ -505,7 +568,7 @@ const put = {
             obj.id = id;
 
             // atualizar post
-            await private_db.saveEditions(obj);
+            await private_db.updatePost(obj);
 
             // redirecionar a pagina de gerenciar postagens
             res.redirect('/manageposts?token=' + token);
@@ -610,6 +673,30 @@ function generateDate() {
     return today;
 }
 
+// [2] gerar hora em padrão internacional
+function generateHour() {
+    let date = new Date();
+    let hours = addZero(date.getHours());
+    let minutes = addZero(date.getMinutes());
+    let seconds = addZero(date.getSeconds());
+    return `${hours}:${minutes}:${seconds}`;
+}
+
+// [2] adiciona zero na hora
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+// filtrar likes por email
+function searchLike(arr, email) {
+    return arr.filter(user => {
+        return user.email === email;
+    });
+}
+
 module.exports = {
     get, post, put, del
 }
@@ -621,4 +708,6 @@ module.exports = {
     [1] How do I get the current date in JavaScript?
         https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
 
+    [2] JavaScript getHours() Method
+        https://www.w3schools.com/jsref/jsref_gethours.asp
 */

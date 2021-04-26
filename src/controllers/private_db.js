@@ -71,13 +71,46 @@ module.exports = {
 
     },
 
-    getNextPostById: async (id) => {
+    getNumberOfLikes: async (postId) => {
 
         try {
 
-            id = Number(id) + 1;
-            let response = await axios.get(`${private_url}/posts/${id}?${apikey}`);
-            return response.data;
+            let response = await axios.get(`${private_url}/likes/${postId}?${apikey}`);
+            return response.data.length;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    },
+
+
+    getNextPostById: async (postId) => {
+
+        try {
+
+            let nextId;
+
+            // obter posts
+            let response = await axios.get(`${private_url}/posts?_order=asc&${apikey}`);
+            let posts = response.data;
+
+            // extrair apenas ids dos posts e ordená-los
+            let ids = posts.map(post => post.id);
+
+            // percorrer ids
+            for (let i = 0; i < ids.length; i++) {
+
+                // se id do post for encontrado, retornar o id posterior se não for inexistente
+                if (postId === ids[i] && ids[i + 1] !== undefined) {
+                    nextId = ids[i + 1];
+                    break;
+                }
+            }
+
+            // obter e retornar dados do post posterior
+            let nextPost = await axios.get(`${private_url}/posts/${nextId}?${apikey}`);
+            return nextPost.data;
 
         } catch (error) {
             console.log(error.message);
@@ -102,9 +135,28 @@ module.exports = {
 
         try {
 
-            id = Number(id) - 1;
-            let response = await axios.get(`${private_url}/posts/${id}?${apikey}`);
-            return response.data;
+            let previousId;
+
+            // obter posts
+            let response = await axios.get(`${private_url}/posts?_order=asc&${apikey}`);
+            let posts = response.data;
+
+            // extrair apenas ids dos posts
+            let ids = posts.map(post => post.id);
+
+            // percorrer ids
+            for (let i = 0; i < ids.length; i++) {
+
+                // se id do post for encontrado, retornar o id anterior se não for inexistente
+                if (id === ids[i] && ids[i - 1] !== undefined) {
+                    previousId = ids[i - 1];
+                    break;
+                }
+            }
+
+            // obter e retornar dados do post anterior
+            let previousPost = await axios.get(`${private_url}/posts/${previousId}?${apikey}`);
+            return previousPost.data;
 
         } catch (error) {
             console.log(error.message);
@@ -151,7 +203,7 @@ module.exports = {
 
     },
 
-    saveEditions: async (obj) => {
+    updatePost: async (obj) => {
         try {
 
             let params = obj;
@@ -161,6 +213,19 @@ module.exports = {
         } catch (error) {
             console.log(error.message);
         }
+    },
+
+    saveLike: async (obj) => {
+
+        try {
+
+            let params = obj;
+            return await axios.post(`${private_url}/likes?${apikey}`, params, { headers: headers });
+
+        } catch (error) {
+            console.log(error.message);
+        }
+
     },
 
     savePost: async (obj) => {
@@ -187,6 +252,17 @@ module.exports = {
             console.log(error.message);
         }
 
+    },
+
+    searchLikeOfUser: async (email, postId) => {
+        try {
+
+            let response = await axios.get(`${private_url}/likes/${postId}?email=${email}&${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
     },
 
     searchEmail: async (email) => {

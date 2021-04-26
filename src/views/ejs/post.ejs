@@ -26,29 +26,27 @@
                                     <div class="card-text post"><%- post.text %></div>
 
                         </div>
-                        <div class="card-footer bg-white">
-                            <div class="row">
-                                <div class="col">
+                        <form>
 
-                                    <button type="submit" formaction="like?token=<%= token %>" formmethod='POST'
-                                        class="btn btn-link text-dark" id="<%= post.id %>" name="id"
-                                        value="<%= post.id %>">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
+                            <div class="card-footer bg-white">
+                                <div class="row">
+                                    <div class="col">
 
-                                    <a href="" class="text-dark" title="Curtir" role="button" aria-pressed="true"
-                                        type="submit" formaction="like?token=<%= token %>" formmethod='POST'
-                                        id="<%= post.id %>" name="id" value="<%= post.id %>">
-                                        <i class="bi bi-heart icon"></i>
-                                    </a>
+                                        <button type="submit"
+                                            formaction="like?name=<%- data.name -%>&email=<%- data.email -%>&token=<%= token %>"
+                                            formmethod='POST' class="btn btn-link text-dark" id="<%= post.id %>"
+                                            name="id" value="<%= post.id %>">
+                                            <i class="bi bi-heart icon"></i>
+                                        </button>
 
-                                    <a href="" class="text-dark float-right" title="Favoritar">
-                                        <i class="bi bi-bookmark"></i>
-                                    </a>
+                                        <a href="" class="text-dark float-right" title="Favoritar">
+                                            <i class="bi bi-bookmark"></i>
+                                        </a>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                         <div class="card-footer bg-white py-4">
                             <div class="form-row align-items-center">
                                 <div class="col-auto mr-2">
