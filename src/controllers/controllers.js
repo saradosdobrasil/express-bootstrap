@@ -115,59 +115,6 @@ const get = {
         }
     },
 
-    like: async (req, res, next) => {
-
-        try {
-
-            // recuperar dados do usuário autenticado passados no middleware 'authentication'
-            let data = req.data;
-            let token = req.token;
-
-            // recuperar dados do post curtido passados via url
-            let postId = Number(req.query.id);
-            let user = req.query.name;
-            let email = req.query.email;
-
-            // obter dados do post, post anterior e post posterior
-            let post = await private_db.getPostById(postId);
-            let previous = await private_db.getPreviousPostById(postId);
-            let next = await private_db.getNextPostById(postId);
-
-            // se user for admin
-            if (data.role === 'admin') {
-
-                // obter número de likes do post
-                let numberOfLikes = await private_db.getNumberOfLikes(postId);
-
-                // verificar se post já foi curtido pelo usuário
-                let postAlreadyLiked = await private_db.searchLikeOfUser(email, postId);
-
-                // se já foi curtido
-                if (postAlreadyLiked !== undefined) {
-
-                    res.render('ejs/post.ejs', { data, numberOfLikes, token, post, previous, next });
-                }
-                // se não foi curtido
-                else {
-
-                    // criar objeto like
-                    let like = new Like(postId, user, email, generateDate(), generateHour());
-
-                    //salvar like do usuário
-                    await private_db.saveLike(like);
-
-                    // redirecionar para a página de post
-                    // res.redirect(`post?id=${id}&token=${token}`);
-                    res.render('ejs/post.ejs', numberOfLikes)
-
-                }
-            }
-
-        } catch (error) {
-            console.log(error.message);
-        }
-    },
-
     login: (req, res, next) => {
         res.render('ejs/login.ejs', { alert: 'login' });
     },
@@ -431,18 +378,38 @@ const post = {
 
         try {
 
-            // recuperar token enviado via url
-            let token = req.query.token;
+            // obter dados enviados pelo corpo da requisição
+            let data = req.body;
 
-            // obter id do post via formulário
-            let postId = req.body.id;
+            // variável para armazenar número de likes
+            let numberOfLikes;
 
-            // obter dados do usuário que curtiu o post via url
-            let user = req.query.name;
-            let email = req.query.email;
+            // verificar se post já foi curtido pelo usuário
+            let postAlreadyLiked = await private_db.searchLikeOfUser(data.email, Number(data.id));
 
-            // redirecionar para a página like
-            res.redirect(`like?id=${postId}&user=${user}&email=${email}&token=${token}`);
+            // se já foi curtido
+            if (postAlreadyLiked !== undefined) {
+
+                console.log("Já foi curtido");
+
+                // obter número de likes do post
+                numberOfLikes = await private_db.getNumberOfLikes(Number(data.id));
+                res.json({ numberOfLikes });
+
+            }
+            // se não foi curtido
+            else {
+
+                // criar objeto like
+                let like = new Like(Number(data.id), data.user, data.email, generateDate(), generateHour());
+
+                //salvar like do usuário no banco
+                await private_db.saveLike(like);
+
+                // obter número de likes do post
+                numberOfLikes = await private_db.getNumberOfLikes(Number(data.id));
+                res.json({ numberOfLikes });
+            }
 
         } catch (error) {
             console.log(error.message);

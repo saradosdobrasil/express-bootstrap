@@ -2,13 +2,16 @@ let vue = new Vue({
     el: '#app',
 
     data: {
-        public: `${window.location.href}public`,
         forms: {
             login: {
                 email: '',
                 password: ''
             }
         },
+        host: {
+            app: `${location.protocol}//${location.hostname}:3000`,
+        },
+        numberOfLikes: null,
         posts: [],
         texts: {
             createAccount: 'Criar conta',
@@ -39,6 +42,22 @@ let vue = new Vue({
         onSubmit(event) {
             // console.log("event.preventDefault() acionado:", event);
         },
+
+        async like(id, user, email, token) {
+            try {
+                let data = {};
+                data.id = id;
+                data.user = user;
+                data.email = email;
+                data.token = token;
+
+                let response = await axios.post(`${this.host.app}/like`, data);
+                this.numberOfLikes = response.data.numberOfLikes;
+
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
     },
 
     mounted() {

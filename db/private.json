@@ -50,29 +50,11 @@
   ],
   "likes": [
     {
-      "id": "5",
+      "id": 5,
       "user": "Admin",
       "email": "admin@mail.com",
-      "date": "2021-04-25",
-      "time": "18:49:17"
-    },
-    {
-      "id": "3",
-      "email": "admin@mail.com",
-      "date": "2021-04-25",
-      "time": "20:33:50"
-    },
-    {
-      "id": "2",
-      "email": "admin@mail.com",
-      "date": "2021-04-25",
-      "time": "22:18:40"
-    },
-    {
-      "id": "1",
-      "email": "admin@mail.com",
       "date": "2021-04-26",
-      "time": "00:22:06"
+      "time": "20:16:00"
     }
   ],
   "comments": [

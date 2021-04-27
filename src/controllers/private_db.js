@@ -75,7 +75,7 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${private_url}/likes/${postId}?${apikey}`);
+            let response = await axios.get(`${private_url}/likes?id=${postId}&${apikey}`);
             return response.data.length;
 
         } catch (error) {

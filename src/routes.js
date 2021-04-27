@@ -11,7 +11,6 @@ router.get('/', controllers.get.index);
 router.get('/admins', middlewares.authentication, controllers.get.admins);
 router.get('/addtocarousel', middlewares.authentication, controllers.get.addtocarousel);
 router.get('/authentication', middlewares.authentication, controllers.get.authentication);
-router.get('/like', middlewares.authentication, controllers.get.like);
 router.get('/login', controllers.get.login);
 router.get('/managecarousel', middlewares.authentication, controllers.get.managecarousel);
 router.get('/manageposts', middlewares.authentication, controllers.get.manageposts);
