@@ -5,6 +5,7 @@ const settings = require('../../settings');
 const private_url = `${settings.location.host}3000/private`;
 const headers = { 'Content-Type': 'application/json' };
 const apikey = `apikey=${process.env.APIKEY}`;
+const Like = require('../models/Like');
 
 module.exports = {
 
@@ -30,6 +31,27 @@ module.exports = {
             console.log(error.message);
         }
 
+    },
+
+    deleteLike: async (postId, userId) => {
+
+        try {
+
+            let response = await axios.get(`${private_url}/likes/${postId}?${apikey}`);
+
+            // filtrar array de usuários (ignorar objetos com userId)
+            let filteredUsers = response.data.users.filter(user => user.id !== userId);
+
+            // copiar array filtrado para a resposta original
+            response.data.users = filteredUsers;
+
+            // atualizar likes do post no banco
+            let params = response.data;
+            await axios.put(`${private_url}/likes/${postId}?${apikey}`, params, { headers: headers });
+
+        } catch (error) {
+            console.log(error.message);
+        }
     },
 
     getAdmins: async () => {
@@ -75,8 +97,8 @@ module.exports = {
 
         try {
 
-            let response = await axios.get(`${private_url}/likes?id=${postId}&${apikey}`);
-            return response.data.length;
+            let response = await axios.get(`${private_url}/likes/${postId}?${apikey}`);
+            return response.data.users.length;
 
         } catch (error) {
             console.log(error.message);
@@ -88,6 +110,9 @@ module.exports = {
     getNextPostById: async (postId) => {
 
         try {
+
+            // converter string para número
+            id = Number(id);
 
             let nextId;
 
@@ -134,6 +159,9 @@ module.exports = {
     getPreviousPostById: async (id) => {
 
         try {
+
+            // converter string para número
+            id = Number(id);
 
             let previousId;
 
@@ -209,18 +237,38 @@ module.exports = {
             let params = obj;
             return await axios.put(`${private_url}/posts/${obj.id}?${apikey}`, params, { headers: headers });
 
-
         } catch (error) {
             console.log(error.message);
         }
     },
 
-    saveLike: async (obj) => {
+    saveLike: async (postId, user) => {
 
         try {
 
-            let params = obj;
-            return await axios.post(`${private_url}/likes?${apikey}`, params, { headers: headers });
+            // buscar like no banco
+            let like = await axios.get(`${private_url}/likes?id=${postId}&${apikey}`);
+            console.log(like.data);
+
+            // se like não se encontra no banco
+            if (like.data.length === 0) {
+
+                // criar objeto like e salvar no banco
+                let params = new Like(postId, user);
+                await axios.post(`${private_url}/likes?${apikey}`, params, { headers: headers });
+            }
+            // se like já existe no banco
+            else {
+
+                // adicionar usuário ao array de users
+                like = like.data[0];
+                like.users.push(user);
+
+                // atualizar like no banco
+                let params = like;
+                await axios.put(`${private_url}/likes/${postId}?${apikey}`, params, { headers: headers });
+
+            }
 
         } catch (error) {
             console.log(error.message);
@@ -254,11 +302,26 @@ module.exports = {
 
     },
 
-    searchLikeOfUser: async (email, postId) => {
+    searchLikeOfUser: async (postId, userId) => {
         try {
 
-            let response = await axios.get(`${private_url}/likes/${postId}?email=${email}&${apikey}`);
-            return response.data;
+            let response = await axios.get(`${private_url}/likes/${postId}?${apikey}`);
+            let boolean = false;
+
+            // se post não possui nenhum like
+            if (response.data.users.length === 0) {
+                return boolean;
+
+            } else {
+
+                response.data.users.forEach(user => {
+                    if (user.id === userId) {
+                        boolean = true;
+                    }
+                });
+
+                return boolean;
+            }
 
         } catch (error) {
             console.log(error.message);

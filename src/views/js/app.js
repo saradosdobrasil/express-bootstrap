@@ -11,6 +11,10 @@ let vue = new Vue({
         host: {
             app: `${location.protocol}//${location.hostname}:3000`,
         },
+        interpolation: {
+            ejs: true,
+            vuejs: false,
+        },
         numberOfLikes: null,
         posts: [],
         texts: {
@@ -43,16 +47,21 @@ let vue = new Vue({
             // console.log("event.preventDefault() acionado:", event);
         },
 
-        async like(id, user, email, token) {
+        async like(postId, userId, name, email, token) {
             try {
                 let data = {};
-                data.id = id;
-                data.user = user;
+                data.postId = postId;
+                data.userId = userId;
+                data.name = name;
                 data.email = email;
                 data.token = token;
 
                 let response = await axios.post(`${this.host.app}/like`, data);
                 this.numberOfLikes = response.data.numberOfLikes;
+
+                // desativar interpolação do ejs e ativar do vuejs
+                this.interpolation.ejs = false;
+                this.interpolation.vuejs = true;
 
             } catch (error) {
                 console.log(error.message);

@@ -2,12 +2,15 @@
 
 class Like {
 
-    constructor(id, user, email, date, time) {
-        this.id = id;
-        this.user = user;
-        this.email = email;
-        this.date = date;
-        this.time = time;
+    constructor(id, obj = { id, user, email, date, time }) {
+        this.id = id; // post id
+        this.users = this.saveLike(obj);
+    }
+
+    saveLike(obj) {
+        let arr = [];
+        arr.push(obj);
+        return arr;
     }
 }
 

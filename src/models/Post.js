@@ -6,7 +6,6 @@ class Post {
         this.title = title;
         this.date = date;
         this.text = text;
-        this.likes = []
     }
 }
 

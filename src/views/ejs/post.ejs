@@ -32,16 +32,23 @@
                                     <div class="col">
 
                                         <button type="submit"
-                                            @click="like(<%= JSON.stringify(post.id) %>, <%= JSON.stringify(data.name) %>, <%= JSON.stringify(data.email) %>, <%= JSON.stringify(token) %>)"
+                                            @click="like(<%= JSON.stringify(post.id) %>, <%= JSON.stringify(data.id) %>, <%= JSON.stringify(data.name) %>, <%= JSON.stringify(data.email) %>, <%= JSON.stringify(token) %>)"
                                             type="submit" class="btn btn-link no-focus text-dark">
                                             <i class="bi bi-heart icon"></i>
                                         </button>
 
-                                        {{ numberOfLikes }}
+                                        <%= data.email %>
 
-                                        <a href="" class="text-dark float-right" title="Favoritar">
-                                            <i class="bi bi-bookmark"></i>
-                                        </a>
+                                            <span v-show="interpolation.ejs">
+                                                <%= numberOfLikes %>
+                                            </span>
+                                            <span v-show="interpolation.vuejs">
+                                                {{ numberOfLikes }}
+                                            </span>
+
+                                            <a href="" class="text-dark float-right" title="Favoritar">
+                                                <i class="bi bi-bookmark"></i>
+                                            </a>
 
                                     </div>
                                 </div>

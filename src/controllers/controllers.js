@@ -183,15 +183,18 @@ const get = {
             let token = req.token;
 
             // recuperar id do post
-            let id = Number(req.query.id);
+            let id = req.query.id;
 
             // obter dados do post, anterior e posterior
             let post = await private_db.getPostById(id);
             let previous = await private_db.getPreviousPostById(id);
             let next = await private_db.getNextPostById(id);
 
+            // obter número de likes do post
+            let numberOfLikes = await private_db.getNumberOfLikes(id);
+
             // exibir página da postagem
-            res.render('ejs/post.ejs', { data, post, previous, next, token });
+            res.render('ejs/post.ejs', { data, post, numberOfLikes, previous, next, token });
 
 
         } catch (error) {
@@ -354,13 +357,16 @@ const post = {
             if (searchUser.length === 1) {
 
                 // obter nome do usuário
+                let id = searchUser[0].id;
+
+                // obter nome do usuário
                 let name = searchUser[0].name;
 
                 // obter papel do usuário
                 let role = searchUser[0].role;
 
                 // gerar token JWT (expira em 1 hora)
-                const token = jwt.sign({ name, email, role }, req.app.get('superSecret'), { expiresIn: '1h' });
+                const token = jwt.sign({ id, name, email, role }, req.app.get('superSecret'), { expiresIn: '1h' });
 
                 // redirecionar à rota de autenticação
                 res.redirect(`/authentication?token=` + token);
@@ -385,30 +391,38 @@ const post = {
             let numberOfLikes;
 
             // verificar se post já foi curtido pelo usuário
-            let postAlreadyLiked = await private_db.searchLikeOfUser(data.email, Number(data.id));
+            let postAlreadyLiked = await private_db.searchLikeOfUser(data.postId, data.userId);
+            console.log('postAlreadyLiked', postAlreadyLiked);
 
-            // se já foi curtido
-            if (postAlreadyLiked !== undefined) {
+            // se foi curtido
+            if (postAlreadyLiked) {
 
-                console.log("Já foi curtido");
+                // remover like do usuário
+                await private_db.deleteLike(data.postId, data.userId);
 
-                // obter número de likes do post
-                numberOfLikes = await private_db.getNumberOfLikes(Number(data.id));
+                // obter nova contagem de likes e retornar dados
+                numberOfLikes = await private_db.getNumberOfLikes(data.postId);
                 res.json({ numberOfLikes });
 
             }
             // se não foi curtido
             else {
 
-                // criar objeto like
-                let like = new Like(Number(data.id), data.user, data.email, generateDate(), generateHour());
+                // criar objeto de usuário a partir dos dados enviados pelo formulário
+                let obj = {}
+                obj.id = Number(data.userId);
+                obj.name = data.name;
+                obj.email = data.email;
+                obj.date = generateDate();
+                obj.time = generateHour();
 
                 //salvar like do usuário no banco
-                await private_db.saveLike(like);
+                await private_db.saveLike(data.postId, obj);
 
-                // obter número de likes do post
-                numberOfLikes = await private_db.getNumberOfLikes(Number(data.id));
+                // obter número de likes do post e retornar
+                numberOfLikes = await private_db.getNumberOfLikes(data.postId);
                 res.json({ numberOfLikes });
+
             }
 
         } catch (error) {

@@ -44,17 +44,47 @@
     {
       "title": "xxx",
       "date": "2021-04-25",
-      "text": "xxxx",
+      "text": "xxxxdddttt",
       "id": 5
+    },
+    {
+      "title": "fff",
+      "date": "2021-05-01",
+      "text": "ffff",
+      "id": 6
     }
   ],
   "likes": [
     {
+      "id": 6,
+      "users": [
+        {
+          "id": 1,
+          "name": "Admin",
+          "email": "admin@mail.com",
+          "date": "2021-05-01",
+          "time": "13:37:33"
+        }
+      ]
+    },
+    {
       "id": 5,
-      "user": "Admin",
-      "email": "admin@mail.com",
-      "date": "2021-04-26",
-      "time": "20:16:00"
+      "users": [
+        {
+          "id": 2,
+          "name": "User",
+          "email": "user@mail.com",
+          "date": "2021-05-01",
+          "time": "13:33:54"
+        },
+        {
+          "id": 1,
+          "name": "Admin",
+          "email": "admin@mail.com",
+          "date": "2021-05-01",
+          "time": "13:37:06"
+        }
+      ]
     }
   ],
   "comments": [
