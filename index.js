@@ -19,6 +19,12 @@ const privateDataBase = path.join(__dirname, '/db/private.json');
 const routerPrivateDataBase = jsonServer.router(privateDataBase);
 const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
 
+// Socket.IO
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
 // * ----- CONFIGURAÇÕES ----- *
 
 // chave secreta usada para gerar tokens com JSON Web Tokens
@@ -43,6 +49,12 @@ app.use(express.static(views));
 // colocar sempre antes de app.use(router)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Usar Socket.IO nas rotas do Express
+app.use(function (req, res, next) {
+    req.io = io;
+    next();
+});
 
 // usar middleware router do Express
 app.use(router);

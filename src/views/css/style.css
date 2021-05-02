@@ -36,7 +36,7 @@ figcaption {
     color: white;
 }
 
-.btn:focus.no-focus  {
+.btn:focus.no-focus {
     outline: none;
     box-shadow: none;
 }

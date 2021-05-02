@@ -190,11 +190,14 @@ const get = {
             let previous = await private_db.getPreviousPostById(id);
             let next = await private_db.getNextPostById(id);
 
+            // verificar se post já foi curtido pelo usuário
+            let postAlreadyLiked = await private_db.searchLikeOfUser(id, data.id);
+
             // obter número de likes do post
             let numberOfLikes = await private_db.getNumberOfLikes(id);
 
             // exibir página da postagem
-            res.render('ejs/post.ejs', { data, post, numberOfLikes, previous, next, token });
+            res.render('ejs/post.ejs', { data, post, numberOfLikes, postAlreadyLiked, previous, next, token });
 
 
         } catch (error) {
@@ -392,7 +395,6 @@ const post = {
 
             // verificar se post já foi curtido pelo usuário
             let postAlreadyLiked = await private_db.searchLikeOfUser(data.postId, data.userId);
-            console.log('postAlreadyLiked', postAlreadyLiked);
 
             // se foi curtido
             if (postAlreadyLiked) {
@@ -422,7 +424,6 @@ const post = {
                 // obter número de likes do post e retornar
                 numberOfLikes = await private_db.getNumberOfLikes(data.postId);
                 res.json({ numberOfLikes });
-
             }
 
         } catch (error) {

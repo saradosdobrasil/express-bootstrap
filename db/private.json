@@ -57,15 +57,7 @@
   "likes": [
     {
       "id": 6,
-      "users": [
-        {
-          "id": 1,
-          "name": "Admin",
-          "email": "admin@mail.com",
-          "date": "2021-05-01",
-          "time": "13:37:33"
-        }
-      ]
+      "users": []
     },
     {
       "id": 5,
@@ -85,15 +77,57 @@
           "time": "13:37:06"
         }
       ]
+    },
+    {
+      "id": 1,
+      "users": [
+        {
+          "id": 1,
+          "name": "Admin",
+          "email": "admin@mail.com",
+          "date": "2021-05-01",
+          "time": "13:42:54"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "users": [
+        {
+          "id": 1,
+          "name": "Admin",
+          "email": "admin@mail.com",
+          "date": "2021-05-01",
+          "time": "14:12:17"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "users": [
+        {
+          "id": 1,
+          "name": "Admin",
+          "email": "admin@mail.com",
+          "date": "2021-05-01",
+          "time": "14:12:20"
+        }
+      ]
     }
   ],
   "comments": [
     {
-      "post": 1,
-      "author": "",
-      "text": "Bacana!",
-      "date": "2021-03-02",
-      "hour": ""
+      "id": 6,
+      "users": [
+        {
+          "id": 1,
+          "name": "Admin",
+          "email": "admin@mail.com",
+          "text": "Bacana!",
+          "date": "2021-05-01",
+          "time": "14:12:08"
+        }
+      ]
     }
   ]
 }

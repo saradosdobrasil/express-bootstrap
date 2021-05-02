@@ -1,7 +1,15 @@
+let socket = io();
+
 let vue = new Vue({
     el: '#app',
 
     data: {
+        css: {
+            biHeart: true,
+            biHeartFill: false,
+            textDark: true,
+            textDanger: false
+        },
         forms: {
             login: {
                 email: '',
@@ -67,6 +75,14 @@ let vue = new Vue({
                 console.log(error.message);
             }
         }
+    },
+
+    created() {
+
+        socket.on("connect", () => {
+            console.log("✔️ Socket.IO conectado!");
+        });
+        
     },
 
     mounted() {
