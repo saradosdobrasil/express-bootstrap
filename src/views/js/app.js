@@ -79,14 +79,14 @@ let vue = new Vue({
 
     created() {
 
-        socket.on("connect", () => {
-            console.log("✔️ Socket.IO conectado!");
+        socket.on("connection", data => {
+            console.log(data);
         });
-        
     },
 
     mounted() {
 
+        // animar carousel
         $('.carousel').carousel();
     }
 

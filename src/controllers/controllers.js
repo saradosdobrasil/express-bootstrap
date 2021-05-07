@@ -105,6 +105,14 @@ const get = {
 
         try {
 
+            // obter objeto do Socket.IO
+            let io = req.io;
+
+            // Enviar mensagem de conexão no lado servidor para o lado cliente
+            io.on("connection", socket => {
+                socket.emit("connection", "✔️ Socket.IO conectado!");
+            });
+
             let carousel = await public_db.getDataOfCarousel();
             let cards = await public_db.getDataOfCards();
 

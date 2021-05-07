@@ -20,10 +20,8 @@ const routerPrivateDataBase = jsonServer.router(privateDataBase);
 const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
 
 // Socket.IO
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer);
 
 // * ----- CONFIGURAÇÕES ----- *
 
@@ -82,8 +80,8 @@ app.use((req, res, next) => {
 
 // * ----- START ----- *
 
-// inicializar servidor
-app.listen(`${settings.location.port}`, function () {
+// inicializar servidor (que contém o socket.IO)
+httpServer.listen(`${settings.location.port}`, function () {
     console.log(`Servidor executando em: ${localhost}`);
 });
 
