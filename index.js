@@ -22,6 +22,9 @@ const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
 // Socket.IO
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer);
+io.on("connection", socket => {
+    socket.emit("test", "✔️ Socket.IO conectado!");
+});
 
 // * ----- CONFIGURAÇÕES ----- *
 

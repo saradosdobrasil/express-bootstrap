@@ -105,18 +105,15 @@ const get = {
 
         try {
 
-            // obter objeto do Socket.IO
-            let io = req.io;
-
-            // Enviar mensagem de conexão no lado servidor para o lado cliente
-            io.on("connection", socket => {
-                socket.emit("connection", "✔️ Socket.IO conectado!");
-            });
-
             let carousel = await public_db.getDataOfCarousel();
             let cards = await public_db.getDataOfCards();
 
-            res.render('ejs/index.ejs', { alert: 'login', carousel, cards });
+            // enviar dados para o lado cliente via Socket.IO
+            req.io.on("connection", socket => {
+                socket.emit("index", { carousel, cards });
+            });
+
+            res.render('ejs/index.ejs');
 
         } catch (error) {
             console.log(error.message);
@@ -203,6 +200,14 @@ const get = {
 
             // obter número de likes do post
             let numberOfLikes = await private_db.getNumberOfLikes(id);
+
+            // obter objeto do Socket.IO
+            let io = req.io;
+
+            // Enviar mensagem de conexão no lado servidor para o lado cliente
+            io.on("connection", socket => {
+                socket.emit("numberOfLikes", numberOfLikes);
+            });
 
             // exibir página da postagem
             res.render('ejs/post.ejs', { data, post, numberOfLikes, postAlreadyLiked, previous, next, token });

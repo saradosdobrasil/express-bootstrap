@@ -4,6 +4,8 @@ let vue = new Vue({
     el: '#app',
 
     data: {
+        carousel: [],
+        cards: [],
         css: {
             biHeart: true,
             biHeartFill: false,
@@ -79,8 +81,17 @@ let vue = new Vue({
 
     created() {
 
-        socket.on("connection", data => {
+        socket.on("test", data => {
             console.log(data);
+        });
+
+        socket.on("numberOfLikes", data => {
+            this.numberOfLikes = data;
+        });
+
+        socket.on("index", data => {
+            this.carousel = data.carousel;
+            this.cards = data.cards;
         });
     },
 
