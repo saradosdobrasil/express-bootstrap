@@ -17,7 +17,7 @@
                         {{ texts.login }}
                     </h4>
 
-                    <form action='authentication' method='POST'>
+                    <form action='login' method='POST'>
                         <div class="form-group">
                             <label for="email">{{ texts.email }}</label>
                             <input type="email" class="form-control" id="email" name="email" value="admin@mail.com"
@@ -42,7 +42,7 @@
 
                             <%if (alert==='user already registered' ) { %>
                                 <div class="alert alert-warning text-center mt-5 p-3" role="alert">
-                                    Usuário já cadastrado! Digite suas credenciais de acesso.
+                                    <b>Usuário já cadastrado!</b> Digite suas credenciais de acesso.
                                 </div>
                                 <% } %>
 

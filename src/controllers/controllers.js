@@ -108,12 +108,7 @@ const get = {
             let carousel = await public_db.getDataOfCarousel();
             let cards = await public_db.getDataOfCards();
 
-            // enviar dados para o lado cliente via Socket.IO
-            req.io.on("connection", socket => {
-                socket.emit("index", { carousel, cards });
-            });
-
-            res.render('ejs/index.ejs');
+            res.render('ejs/index.ejs', { carousel, cards });
 
         } catch (error) {
             console.log(error.message);
@@ -192,6 +187,10 @@ const get = {
 
             // obter dados do post, anterior e posterior
             let post = await private_db.getPostById(id);
+
+            // formatar data para padrão brasileiro
+            post.date = formatDate(post.date);
+
             let previous = await private_db.getPreviousPostById(id);
             let next = await private_db.getNextPostById(id);
 
@@ -206,11 +205,11 @@ const get = {
 
             // Enviar mensagem de conexão no lado servidor para o lado cliente
             io.on("connection", socket => {
-                socket.emit("numberOfLikes", numberOfLikes);
+                socket.emit("post", { numberOfLikes, postAlreadyLiked });
             });
 
             // exibir página da postagem
-            res.render('ejs/post.ejs', { data, post, numberOfLikes, postAlreadyLiked, previous, next, token });
+            res.render('ejs/post.ejs', { data, post, previous, next, token });
 
 
         } catch (error) {
@@ -352,40 +351,54 @@ const post = {
     },
 
     // criação do token de acesso
-    authentication: async (req, res, next) => {
+    login: async (req, res, next) => {
 
         try {
 
             let email = req.body.email;
             let password = req.body.password;
 
-            // verificar se usuário existe no banco a partir dos dados informados
-            let searchUser = await private_db.searchUser(email, password);
+            // verificar se existe e-mail de usuário no banco
+            let searchUser = await private_db.searchUser(email);
 
-            // se usuário não existe
+            // se não existe e-mail de usuário
             if (searchUser.length === 0) {
 
                 // exibir página usuário não cadastrado
                 res.render('ejs/login.ejs', { alert: 'user not found' });
+
             }
+            // se existe e-mail no banco 
+            else {
 
-            // se usuário existe
-            if (searchUser.length === 1) {
+                // verificar se a senha informada está correta
+                let searchUserAndPassword = await private_db.searchUserAndPassword(email, password);
 
-                // obter nome do usuário
-                let id = searchUser[0].id;
+                // se usuário existe e senha está errada
+                if (searchUserAndPassword.length === 0) {
 
-                // obter nome do usuário
-                let name = searchUser[0].name;
+                    res.render('ejs/login.ejs', { alert: 'user already registered' });
+                }
 
-                // obter papel do usuário
-                let role = searchUser[0].role;
+                // se usuário existe e senha está correta
+                if (searchUserAndPassword.length === 1) {
 
-                // gerar token JWT (expira em 1 hora)
-                const token = jwt.sign({ id, name, email, role }, req.app.get('superSecret'), { expiresIn: '1h' });
+                    // obter nome do usuário
+                    let id = searchUser[0].id;
 
-                // redirecionar à rota de autenticação
-                res.redirect(`/authentication?token=` + token);
+                    // obter nome do usuário
+                    let name = searchUser[0].name;
+
+                    // obter papel do usuário
+                    let role = searchUser[0].role;
+
+                    // gerar token JWT (expira em 1 hora)
+                    const token = jwt.sign({ id, name, email, role }, req.app.get('superSecret'), { expiresIn: '1h' });
+
+                    // redirecionar à rota de autenticação
+                    res.redirect(`/authentication?token=` + token);
+
+                }
 
             }
 
@@ -409,15 +422,18 @@ const post = {
             // verificar se post já foi curtido pelo usuário
             let postAlreadyLiked = await private_db.searchLikeOfUser(data.postId, data.userId);
 
-            // se foi curtido
-            if (postAlreadyLiked) {
+            // se já foi curtido
+            if (postAlreadyLiked === true) {
 
                 // remover like do usuário
                 await private_db.deleteLike(data.postId, data.userId);
 
+                // informar na interface que post não foi curtido
+                postAlreadyLiked = false;
+
                 // obter nova contagem de likes e retornar dados
                 numberOfLikes = await private_db.getNumberOfLikes(data.postId);
-                res.json({ numberOfLikes });
+                res.json({ postAlreadyLiked, numberOfLikes });
 
             }
             // se não foi curtido
@@ -434,9 +450,12 @@ const post = {
                 //salvar like do usuário no banco
                 await private_db.saveLike(data.postId, obj);
 
+                // informar na interface que post foi curtido
+                postAlreadyLiked = true;
+
                 // obter número de likes do post e retornar
                 numberOfLikes = await private_db.getNumberOfLikes(data.postId);
-                res.json({ numberOfLikes });
+                res.json({ postAlreadyLiked, numberOfLikes });
             }
 
         } catch (error) {
@@ -668,6 +687,14 @@ function generateDate() {
     return today;
 }
 
+// formatar data no padrão brasileiro dd/mm/yyy
+function formatDate(date) {
+    let newDate = date.split("-");
+    newDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
+    return newDate;
+}
+
+
 // [2] gerar hora em padrão internacional
 function generateHour() {
     let date = new Date();
@@ -683,13 +710,6 @@ function addZero(i) {
         i = "0" + i;
     }
     return i;
-}
-
-// filtrar likes por email
-function searchLike(arr, email) {
-    return arr.filter(user => {
-        return user.email === email;
-    });
 }
 
 module.exports = {

@@ -4,8 +4,6 @@ let vue = new Vue({
     el: '#app',
 
     data: {
-        carousel: [],
-        cards: [],
         css: {
             biHeart: true,
             biHeartFill: false,
@@ -21,12 +19,9 @@ let vue = new Vue({
         host: {
             app: `${location.protocol}//${location.hostname}:3000`,
         },
-        interpolation: {
-            ejs: true,
-            vuejs: false,
-        },
         numberOfLikes: null,
         posts: [],
+        postAlreadyLiked: null,
         texts: {
             createAccount: 'Criar conta',
             phone: 'Celular',
@@ -68,10 +63,7 @@ let vue = new Vue({
 
                 let response = await axios.post(`${this.host.app}/like`, data);
                 this.numberOfLikes = response.data.numberOfLikes;
-
-                // desativar interpolação do ejs e ativar do vuejs
-                this.interpolation.ejs = false;
-                this.interpolation.vuejs = true;
+                this.postAlreadyLiked = response.data.postAlreadyLiked;
 
             } catch (error) {
                 console.log(error.message);
@@ -85,20 +77,20 @@ let vue = new Vue({
             console.log(data);
         });
 
-        socket.on("numberOfLikes", data => {
-            this.numberOfLikes = data;
+        socket.on("post", data => {
+            this.numberOfLikes = data.numberOfLikes;
+            this.postAlreadyLiked = data.postAlreadyLiked;
         });
 
-        socket.on("index", data => {
-            this.carousel = data.carousel;
-            this.cards = data.cards;
-        });
     },
+
 
     mounted() {
 
         // animar carousel
         $('.carousel').carousel();
+
+
     }
 
 });

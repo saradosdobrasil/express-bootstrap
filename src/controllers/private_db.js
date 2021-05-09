@@ -339,7 +339,18 @@ module.exports = {
         }
     },
 
-    searchUser: async (email, password) => {
+    searchUser: async (email) => {
+        try {
+
+            let response = await axios.get(`${private_url}/users?email=${email}&${apikey}`);
+            return response.data;
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
+    searchUserAndPassword: async (email, password) => {
         try {
 
             let response = await axios.get(`${private_url}/users?email=${email}&password=${password}&${apikey}`);

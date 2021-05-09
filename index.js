@@ -22,7 +22,7 @@ const jsonServerMiddlewares = jsonServer.defaults({ noCors: true }); // [5]
 // Socket.IO
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer);
-io.on("connection", socket => {
+io.on("connect", socket => {
     socket.emit("test", "✔️ Socket.IO conectado!");
 });
 
@@ -50,6 +50,12 @@ app.use(express.static(views));
 // colocar sempre antes de app.use(router)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// [6] [7] armazenar dados
+app.use(function (req, res, next) {
+    res.locals.data = {};
+    next();
+});
 
 // Usar Socket.IO nas rotas do Express
 app.use(function (req, res, next) {
@@ -105,5 +111,11 @@ httpServer.listen(`${settings.location.port}`, function () {
 
     [5] JSON Server API
         https://www.npmjs.com/package/json-server#api
+
+    [6] res.locals
+        http://expressjs.com/en/api.html#res.locals
+
+    [7] Can I send data via express next() function?
+        https://stackoverflow.com/questions/19793723/can-i-send-data-via-express-next-function
 
 */

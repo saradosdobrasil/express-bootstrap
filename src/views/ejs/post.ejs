@@ -1,7 +1,6 @@
 <%- include("./partials/top-home") -%>
     <%- include("./partials/nav-home") -%>
 
-   aqui  {{ numberOfLikes }}
         <main class="container flex-fill">
             <div class="row p-3">
                 <article class="col-sm-8 py-4">
@@ -32,41 +31,19 @@
                                 <div class="row">
                                     <div class="col">
 
-   <!--                                      <button type="submit"
+                                        <button type="submit"
                                             @click="like(<%= JSON.stringify(post.id) %>, <%= JSON.stringify(data.id) %>, <%= JSON.stringify(data.name) %>, <%= JSON.stringify(data.email) %>, <%= JSON.stringify(token) %>)"
                                             type="submit" class="btn btn-link no-focus"
-                                            v-bind:class="{ 'text-dark': css.textDark, 'text-danger': css.textDanger }">
-                                            <i class="bi icon"
-                                                v-bind:class="{ 'bi-heart': css.biHeart, 'bi-heart-fill': css.biHeartFill }"></i>
-                                        </button> -->
+                                            :class="{'text-dark' : postAlreadyLiked === false, 'text-danger' : postAlreadyLiked === true}">
+                                            <i class="bi"
+                                                :class="{'bi-heart' : postAlreadyLiked === false, 'bi-heart-fill': postAlreadyLiked === true}"></i>
+                                        </button>
 
-                                        <%if (postAlreadyLiked) { %>
-                                            <button type="submit"
-                                                @click="like(<%= JSON.stringify(post.id) %>, <%= JSON.stringify(data.id) %>, <%= JSON.stringify(data.name) %>, <%= JSON.stringify(data.email) %>, <%= JSON.stringify(token) %>)"
-                                                type="submit" class="btn btn-link no-focus text-danger">
-                                                <i class="bi bi-heart-fill icon"></i>
-                                            </button>
-                                            <% } %>
+                                        {{ numberOfLikes }}
 
-                                            <%if (!postAlreadyLiked) { %>
-                                                <button type="submit"
-                                                    @click="like(<%= JSON.stringify(post.id) %>, <%= JSON.stringify(data.id) %>, <%= JSON.stringify(data.name) %>, <%= JSON.stringify(data.email) %>, <%= JSON.stringify(token) %>)"
-                                                    type="submit" class="btn btn-link no-focus text-dark">
-                                                    <i class="bi bi-heart icon"></i>
-                                                </button>
-                                                <% } %>
-
-                                                <span v-show="interpolation.ejs">
-                                                    <%= numberOfLikes %>
-                                                </span>
-                                                
-                                                <span v-show="interpolation.vuejs">
-                                                    {{ numberOfLikes }}
-                                                </span>
-
-                                                <a href="" class="text-dark float-right" title="Favoritar">
-                                                    <i class="bi bi-bookmark"></i>
-                                                </a>
+                                        <a href="" class="text-dark float-right" title="Favoritar">
+                                            <i class="bi bi-bookmark"></i>
+                                        </a>
 
                                     </div>
                                 </div>

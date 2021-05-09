@@ -25,7 +25,7 @@ router.get('/users', middlewares.authentication, controllers.get.users);
 
 // POST
 router.post('/addtocarousel', controllers.post.addtocarousel);
-router.post('/authentication', controllers.post.authentication); // obter token de acesso
+router.post('/login', controllers.post.login); // obter token de acesso
 router.post('/deleteofcarousel', controllers.del.deleteofcarousel);
 router.post('/deleteuser', controllers.del.deleteuser);
 router.post('/deletepost', controllers.del.deletepost);
